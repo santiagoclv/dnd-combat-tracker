@@ -83,7 +83,7 @@ export default function App() {
                     itemLayout="horizontal"
                     dataSource={state.initiatives}
                     renderItem={item => (
-                        <List.Item >
+                        <List.Item key={item}>
                             <List.Item.Meta
                                 avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                                 title={<a href="https://ant.design">{item}</a>}
@@ -115,7 +115,7 @@ export default function App() {
                     {
                         buttons.map(({ type, value, Icon }) => {
                             return (
-                                <Col span={8} >
+                                <Col span={8} key={value}>
                                     <Button
                                         size="large"
                                         style={{ minWidth: '150px', height: '100%' }}
