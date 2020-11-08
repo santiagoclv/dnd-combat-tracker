@@ -55,13 +55,13 @@ export default function App() {
 
 
     return (
-        <Row gutter={[16, 16]}>
+        <Row className="App" gutter={[16, 16]}>
             <Col span={12} >
                 <Row>
                     <Col span={12}>
                         <Button
                             size="large"
-                            style={{ minWidth: '150px', height: '100%' }}
+                            style={{ maxWidth: '150px', height: '100%' }}
                             type="primary"
                             disabled={state.initiatives.length < 2}
                             onClick={() => dispatch({ type: "back" })} >
@@ -71,7 +71,7 @@ export default function App() {
                     <Col span={12}>
                         <Button
                             size="large"
-                            style={{ minWidth: '150px', height: '100%' }}
+                            style={{ maxWidth: '150px', height: '100%' }}
                             type="primary"
                             disabled={state.initiatives.length < 2}
                             onClick={() => dispatch({ type: "next" })} >
@@ -105,7 +105,7 @@ export default function App() {
                     <Col span={8} >
                         <Button
                             size="large"
-                            style={{ minWidth: '150px' }}
+                            style={{ maxWidth: '150px' }}
                             type="primary" onClick={() => dispatch({ type: 'deleteInputInitiative' })} >
                             <DeleteOutlined />
                         </Button>
@@ -118,7 +118,7 @@ export default function App() {
                                 <Col span={8} key={value}>
                                     <Button
                                         size="large"
-                                        style={{ minWidth: '150px', height: '100%' }}
+                                        style={{ minWidth: '70px', height: '100%' }}
                                         type="primary" onClick={() => dispatch({ type, value })} >
                                         {!!value ? value : <Icon />}
                                     </Button>
