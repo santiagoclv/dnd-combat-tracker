@@ -1,40 +1,40 @@
 import React, { useReducer } from 'react';
-import { DeleteOutlined, EnterOutlined, DingtalkOutlined, LineOutlined } from '@ant-design/icons';
-import { Button, Row, Col, Statistic, List, Avatar } from 'antd';
+import { Row, Col, Button, List, Avatar, Menu } from 'antd';
+import { Tabs } from 'antd';
+import Initiative from './Initiative';
+import HitPoints from './HitPoints';
 
-const buttons = [
-    { value: "1", type: 'writeInputInitiative' },
-    { value: "2", type: 'writeInputInitiative' },
-    { value: "3", type: 'writeInputInitiative' },
-    { value: "4", type: 'writeInputInitiative' },
-    { value: "5", type: 'writeInputInitiative' },
-    { value: "6", type: 'writeInputInitiative' },
-    { value: "7", type: 'writeInputInitiative' },
-    { value: "8", type: 'writeInputInitiative' },
-    { value: "9", type: 'writeInputInitiative' },
-    { Icon: LineOutlined, type: 'negativeInputInitiative' },
-    { value: "0", type: 'writeInputInitiative' },
-    { Icon: EnterOutlined, type: 'addInitiative' },
-];
+const { TabPane } = Tabs;
 
-const initialState = { initiatives: [], inputInitiative: 0 };
+const initialState = { initiatives: [], inputInitiative: 0, inputName: '' };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'addInitiative': {
-            const initiatives = [...state.initiatives, state.inputInitiative].sort((a, b) => b - a);
-            return { ...state, initiatives, inputInitiative: 0 };
+            const index = state.initiatives.findIndex(initiative => initiative.value <= state.inputInitiative);
+            const initiative = { value: state.inputInitiative ?? 0, name: state.inputName, id: Date.now() };
+            if (index === -1) {
+                const initiatives = [initiative, ...state.initiatives];
+                return { ...state, initiatives, inputInitiative: 0, inputName: '' };
+            } else {
+                const initiatives = state.initiatives.slice(0, index).concat(initiative).concat(state.initiatives.slice(index));
+                return { ...state, initiatives, inputInitiative: 0, inputName: '' };
+            }
         }
         case 'removeInitiative': {
-            const initiatives = state.initiatives.filter(value => value !== action.value);
+            const initiatives = state.initiatives.filter(({ value, name }) => value !== action.value && name !== action.name);
             return { ...state, initiatives };
         }
         case 'writeInputInitiative': {
             const inputInitiative = parseInt(state.inputInitiative + action.value);
             return { ...state, inputInitiative };
         }
+        case 'writeInputName': {
+            const inputName = state.inputName + action.value;
+            return { ...state, inputName };
+        }
         case 'deleteInputInitiative': {
-            return { ...state, inputInitiative: 0 };
+            return { ...state, inputInitiative: 0, inputName: '' };
         }
         case 'negativeInputInitiative': {
             return { ...state, inputInitiative: -state.inputInitiative };
@@ -53,10 +53,9 @@ function reducer(state, action) {
 export default function App() {
     const [state, dispatch] = useReducer(reducer, initialState);
 
-
     return (
         <Row className="App" gutter={[16, 16]}>
-            <Col span={12} >
+            <Col span={8} >
                 <Row>
                     <Col span={12}>
                         <Button
@@ -66,7 +65,7 @@ export default function App() {
                             disabled={state.initiatives.length < 2}
                             onClick={() => dispatch({ type: "back" })} >
                             Back
-                        </Button>
+                    </Button>
                     </Col>
                     <Col span={12}>
                         <Button
@@ -79,56 +78,29 @@ export default function App() {
                         </Button>
                     </Col>
                 </Row>
-                <List
-                    itemLayout="horizontal"
-                    dataSource={state.initiatives}
-                    renderItem={item => (
-                        <List.Item key={item}>
-                            <List.Item.Meta
-                                avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                                title={<a href="https://ant.design">{item}</a>}
-                            />
-                        </List.Item>
-                    )}
-                />
+                <Menu>
+                    { state.initiatives.map( ({value, name, id}) => (
+                         <Menu.Item 
+                            style={{height: '50px'}}
+                            key={id} 
+                            icon={<Avatar size={50} style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}>{name}</Avatar>}>
+                            {value ? value : '0'}
+                        </Menu.Item>
+                    ))}
+                </Menu>
             </Col>
-            <Col span={12} >
-                <Row gutter={[16, 16]}>
-                    <Col span={8} >
-                        <Statistic
-                            title="Initiative"
-                            value={state.inputInitiative}
-                            precision={0}
-                            prefix={<DingtalkOutlined />}
-                        />
-                    </Col>
-                    <Col span={8} >
-                        <Button
-                            size="large"
-                            style={{ maxWidth: '150px' }}
-                            type="primary" onClick={() => dispatch({ type: 'deleteInputInitiative' })} >
-                            <DeleteOutlined />
-                        </Button>
-                    </Col>
-                </Row>
-                <Row gutter={[16, 16]}>
-                    {
-                        buttons.map(({ type, value, Icon }) => {
-                            return (
-                                <Col span={8} key={value}>
-                                    <Button
-                                        size="large"
-                                        style={{ minWidth: '70px', height: '100%' }}
-                                        type="primary" onClick={() => dispatch({ type, value })} >
-                                        {!!value ? value : <Icon />}
-                                    </Button>
-                                </Col>
-                            );
-                        })
-                    }
-
-                </Row>
+            <Col span={16} >
+                <Tabs defaultActiveKey="1">
+                    <TabPane tab="Initiative" key="1">
+                        <Initiative state={state} dispatch={dispatch} />
+                    </TabPane>
+                    <TabPane tab="Hit Points" key="2">
+                        <HitPoints state={state} dispatch={dispatch} />
+                    </TabPane>
+                </Tabs>
             </Col>
         </Row>
+
+
     )
 }
