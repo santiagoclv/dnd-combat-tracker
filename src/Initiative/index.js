@@ -1,9 +1,7 @@
 import React from 'react';
 
-import { DeleteOutlined, DingtalkOutlined, LineOutlined, EnterOutlined  } from '@ant-design/icons';
+import { DeleteOutlined, LineOutlined  } from '@ant-design/icons';
 import { Button, Row, Col, Statistic } from 'antd';
-
-const buttonLetters = { letters: "q w e r t y u i o p a s d f g h j k l ñ z x c v b n m", type: 'writeInputName'};
 
 const buttons = [
     { value: "1", type: 'writeInputInitiative' },
@@ -17,7 +15,7 @@ const buttons = [
     { value: "9", type: 'writeInputInitiative' },
     { Icon: LineOutlined, type: 'negativeInputInitiative' },
     { value: "0", type: 'writeInputInitiative' },
-    { Icon: EnterOutlined, type: 'addInitiative' },
+    { Icon: DeleteOutlined, type: 'deleteInputInitiative' },
 ];
 
 
@@ -42,22 +40,13 @@ function Keyboard({dispatch}) {
 
 export default function Initiative({dispatch, state}) {
     return <>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[16, 16]} justify="center">
                 <Col span={8} >
                     <Statistic
-                        title="Initiative"
+                        style={{ margin : 10}}
                         value={state.inputInitiative}
                         precision={0}
-                        prefix={<DingtalkOutlined />}
                     />
-                </Col>
-                <Col span={8} >
-                    <Button
-                        size="large"
-                        style={{ maxWidth: '150px' }}
-                        type="primary" onClick={() => dispatch({ type: 'deleteInputInitiative' })} >
-                        <DeleteOutlined />
-                    </Button>
                 </Col>
             </Row>
             <Row gutter={[16, 16]}>
