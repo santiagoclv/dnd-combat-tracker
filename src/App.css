@@ -19,4 +19,7 @@ body, html {
 
 .initiative{
     padding: 0 20px;
+    width: auto;
+    font-size: 20px;
+    text-align: center;
 }

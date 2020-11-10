@@ -150,17 +150,19 @@ export default function App() {
                                 key={id}
                                 onClick={() => dispatch({ type: "select", value: id })}
                                 icon={<Avatar size={50} style={{ fontSize: 25, fontWeight: 700, color: 'blue' }}>{value}</Avatar>}>
-                                <span className="initiative">{name}</span>
                                 { monster && <Avatar
                                     size={50}
                                     style={{
+                                        textAlign: 'end',
                                         fontSize: 25,
                                         fontWeight: 500,
+                                        marginLeft: 20,
                                         color: 'white',
                                         backgroundColor: hitpoints > 0 ? 'green' : 'red'
                                     }}>
                                     {hitpoints}
                                 </Avatar>}
+                                <span className="initiative">{name}</span>
                             </Menu.Item>
                         ))}
                 </Menu>
