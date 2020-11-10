@@ -10,11 +10,12 @@ const { TabPane } = Tabs;
 const { Step } = Steps;
 
 const steps = [
-    {
-        title: 'Initiative',
-    },
+    
     {
         title: 'Name',
+    },
+    {
+        title: 'Initiative',
     },
     {
         title: 'Hit Points',
@@ -176,10 +177,10 @@ export default function App() {
                             ))}
                         </Steps>
                         {
-                            current === 0 && <Initiative state={state} dispatch={dispatch} />
+                            current === 1 && <Initiative state={state} dispatch={dispatch} />
                         }
                         {
-                            current === 1 && <Name state={state} dispatch={dispatch} />
+                            current === 0 && <Name state={state} dispatch={dispatch} />
                         }
                         {
                             current === 2 && <HitPoints state={state} dispatch={dispatch} />

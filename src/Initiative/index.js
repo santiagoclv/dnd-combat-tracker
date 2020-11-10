@@ -15,17 +15,18 @@ const buttons = [
     { value: "9", type: 'writeInputInitiative' },
     { Icon: LineOutlined, type: 'negativeInputInitiative' },
     { value: "0", type: 'writeInputInitiative' },
-    { Icon: DeleteOutlined, type: 'deleteInputInitiative' },
+    { Icon: DeleteOutlined, type: 'deleteInputInitiative', danger: true },
 ];
 
 
 function Keyboard({dispatch}) {
     return (
         
-            buttons.map(({ type, value, Icon }) => {
+            buttons.map(({ type, value, Icon, danger }) => {
                 return (
                     <Col span={8} key={value}>
                         <Button
+                            danger={danger}
                             size="large"
                             style={{ minWidth: '70px', height: '100%' }}
                             type="primary" onClick={() => dispatch({ type, value })} >

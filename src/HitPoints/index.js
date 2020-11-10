@@ -15,18 +15,19 @@ const buttons = [
     { value: "9", type: 'writeInputHitpoints' },
     { },
     { value: "0", type: 'writeInputHitpoints' },
-    { Icon: DeleteOutlined, type: 'deleteInputHitpoints' },
+    { Icon: DeleteOutlined, type: 'deleteInputHitpoints', danger: true },
 ];
 
 
 function Keyboard({dispatch}) {
     return (
         
-            buttons.map(({ type, value, Icon }) => {
+            buttons.map(({ type, value, Icon, danger }) => {
                 if(!type) return <Col span={8} key={"vacio"} />;
                 return (
                     <Col span={8} key={value ?? type}>
                         <Button
+                            danger={danger}
                             size="large"
                             style={{ minWidth: '70px', height: '100%' }}
                             type="primary" onClick={() => dispatch({ type, value })} >

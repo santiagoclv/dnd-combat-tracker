@@ -31,6 +31,12 @@ const buttonLetters = [
     { value : "b", type: "writeInputName" },
     { value : "n", type: "writeInputName" },
     { value : "m", type: "writeInputName" },
+
+    { value : "Romina", type: "writeInputName" },
+    { value : "Matias", type: "writeInputName" },
+    { value : "Matilde", type: "writeInputName" },
+    { value : "Nestor", type: "writeInputName" },
+    { value : "Daniel", type: "writeInputName" },
 ];
 
 function Keyboard({dispatch}) {
@@ -62,11 +68,11 @@ export default function Name({dispatch, state}) {
             </Row>
             <Row gutter={[8, 8]}>
                 <Keyboard dispatch={dispatch} />
-                <Col span={2} />
                 <Col >
                     <Button
+                        danger
                         size="large"
-                        style={{ minWidth: '70px', height: '100%' }}
+                        style={{ width: '100px', height: '100%' }}
                         type="primary" onClick={() => dispatch({ type: 'deleteInputName' })} >
                         <DeleteOutlined />
                     </Button>
