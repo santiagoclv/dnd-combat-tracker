@@ -31,17 +31,11 @@ const buttonLetters = [
     { value : "b", type: "writeInputName" },
     { value : "n", type: "writeInputName" },
     { value : "m", type: "writeInputName" },
-
-    { value : "Romina", type: "writeInputName" },
-    { value : "Matias", type: "writeInputName" },
-    { value : "Matilde", type: "writeInputName" },
-    { value : "Nestor", type: "writeInputName" },
-    { value : "Daniel", type: "writeInputName" },
 ];
 
-function Keyboard({dispatch}) {
+function Keyboard({dispatch, extraWords}) {
     return (
-        buttonLetters.map(({ type, value, Icon }) => {
+        buttonLetters.concat(extraWords).map(({ type, value, Icon }) => {
             return (
                 <Col key={value}>
                     <Button
@@ -57,6 +51,11 @@ function Keyboard({dispatch}) {
 }
 
 export default function Name({dispatch, state}) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const players_param = urlParams.get('players') ? urlParams.get('players')  : null;
+    const players = players_param?.split(",")?.map( ply => ({ value : ply, type: "writeInputName" })) ?? [];
+
     return <>
             <Row gutter={[16, 16]} justify="center">
                 <Col span={8} >
@@ -67,7 +66,7 @@ export default function Name({dispatch, state}) {
                 </Col>
             </Row>
             <Row gutter={[8, 8]}>
-                <Keyboard dispatch={dispatch} />
+                <Keyboard extraWords={players} dispatch={dispatch} />
                 <Col >
                     <Button
                         danger
