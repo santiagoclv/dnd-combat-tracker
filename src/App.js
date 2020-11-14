@@ -1,6 +1,8 @@
 import React, { useReducer, useState } from 'react';
 import { Row, Col, Button, Avatar, Menu, Tabs, Steps } from 'antd';
 
+import { DeleteOutlined } from '@ant-design/icons';
+
 import Initiative from './Initiative';
 import HitPoints from './HitPoints';
 import HitPointsEditor from './HitPointsEditor';
@@ -10,7 +12,7 @@ const { TabPane } = Tabs;
 const { Step } = Steps;
 
 const steps = [
-    
+
     {
         title: 'Name',
     },
@@ -92,9 +94,9 @@ function reducer(state, action) {
             return { ...state, selected: action.value };
         }
         case 'editHitpoints': {
-            const initiatives = state.initiatives.map( ini => {
-                const copy_ini = {...ini};
-                if(ini.id === state.selected){
+            const initiatives = state.initiatives.map(ini => {
+                const copy_ini = { ...ini };
+                if (ini.id === state.selected) {
                     copy_ini.hitpoints = copy_ini.hitpoints + action.value;
                 }
                 return copy_ini;
@@ -102,7 +104,7 @@ function reducer(state, action) {
             return { ...state, initiatives };
         }
         case 'clean': {
-            return { ...state, inputInitiative: 0, inputName: '', inputHitpoints: 0, selected: null  };
+            return { ...state, inputInitiative: 0, inputName: '', inputHitpoints: 0, selected: null };
         }
         default:
             throw new Error();
@@ -114,7 +116,7 @@ export default function App() {
     const [current, setCurrent] = useState(0);
 
     return (
-        <Row className="App" gutter={[16, 16]}>
+        <Row gutter={[16, 16]} style={{ width: "100%", height: "100%" }}>
             <Col span={8} >
                 <Row style={{ height: '40px' }} >
                     <Col span={12}>
@@ -186,9 +188,36 @@ export default function App() {
                             current === 2 && <HitPoints state={state} dispatch={dispatch} />
                         }
                         <div className="steps-action">
+                            {
+                                current === 0 &&
+                                <Button
+                                    danger
+                                    style={{width: '100px'}}
+                                    type="primary" onClick={() => dispatch({ type: 'deleteInputName' })} >
+                                    <DeleteOutlined />
+                                </Button>
+                            }
+                            {
+                                current === 1 &&
+                                <Button
+                                    danger
+                                    style={{width: '100px'}}
+                                    type="primary" onClick={() => dispatch({ type: 'deleteInputInitiative' })} >
+                                    <DeleteOutlined />
+                                </Button>
+                            }
+                            {
+                                current === 2 &&
+                                <Button
+                                    danger
+                                    style={{width: '100px'}}
+                                    type="primary" onClick={() => dispatch({ type: 'deleteInputHitpoints' })} >
+                                    <DeleteOutlined />
+                                </Button>
+                            }
 
                             {current > 0 && (
-                                <Button style={{ margin: '0 8px' }} onClick={() => setCurrent(current - 1)}>
+                                <Button onClick={() => setCurrent(current - 1)}>
                                     Previous
                                 </Button>
                             )}
@@ -199,12 +228,12 @@ export default function App() {
                             )}
 
                             {current === steps.length - 1 && (
-                                <Button type="primary" danger onClick={() => {setCurrent(0); dispatch({ type: 'addInitiative', monster: true })}}>
+                                <Button type="primary" danger onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: true }) }}>
                                     Done Monster
                                 </Button>
                             )}
                             {current === steps.length - 1 && (
-                                <Button type="primary" onClick={() => {setCurrent(0); dispatch({ type: 'addInitiative', monster: false })}}>
+                                <Button type="primary" onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: false }) }}>
                                     Done Player
                                 </Button>
                             )}

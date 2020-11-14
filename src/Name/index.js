@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { DeleteOutlined  } from '@ant-design/icons';
 import { Button, Row, Col, Statistic } from 'antd';
 
 const buttonLetters = [
@@ -67,15 +66,6 @@ export default function Name({dispatch, state}) {
             </Row>
             <Row gutter={[8, 8]}>
                 <Keyboard extraWords={players} dispatch={dispatch} />
-                <Col >
-                    <Button
-                        danger
-                        size="large"
-                        style={{ width: '100px', height: '100%' }}
-                        type="primary" onClick={() => dispatch({ type: 'deleteInputName' })} >
-                        <DeleteOutlined />
-                    </Button>
-                </Col>
             </Row>
         </>
 }

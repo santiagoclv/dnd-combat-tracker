@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { DeleteOutlined } from '@ant-design/icons';
 import { Button, Row, Col, Statistic } from 'antd';
 
 const buttons = [
@@ -15,7 +14,6 @@ const buttons = [
     { value: "9", type: 'writeInputHitpoints' },
     { },
     { value: "0", type: 'writeInputHitpoints' },
-    { Icon: DeleteOutlined, type: 'deleteInputHitpoints', danger: true },
 ];
 
 
@@ -51,7 +49,7 @@ export default function HitPoints({dispatch, state}) {
                     />
                 </Col>
             </Row>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[8, 8]}>
                 <Keyboard dispatch={dispatch} />
             </Row>
         </>

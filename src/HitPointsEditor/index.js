@@ -48,7 +48,7 @@ export default function HitPoints({dispatch, state}) {
                 </Col>
                 <Col>
                     
-                    <Row>
+                    <Row gutter={[8, 8]}>
                         <Keyboard dispatch={dispatch} isNegative={checked} />
                     </Row>
                 </Col>

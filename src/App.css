@@ -12,14 +12,22 @@ body, html {
     padding:0;
 }
 
-.App {
-    height: 100%;
-    width: 100%;
-}
-
 .initiative{
     padding: 0 20px;
     width: auto;
     font-size: 20px;
     text-align: center;
+}
+
+
+.steps-action{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+.steps-action * {
+    margin: 0 8px;
+}
+.steps-action :first-child {
+    margin: 0 auto 0 0;
 }

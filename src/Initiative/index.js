@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { DeleteOutlined, LineOutlined  } from '@ant-design/icons';
+import { LineOutlined  } from '@ant-design/icons';
 import { Button, Row, Col, Statistic } from 'antd';
 
 const buttons = [
@@ -15,7 +15,7 @@ const buttons = [
     { value: "9", type: 'writeInputInitiative' },
     { Icon: LineOutlined, type: 'negativeInputInitiative' },
     { value: "0", type: 'writeInputInitiative' },
-    { Icon: DeleteOutlined, type: 'deleteInputInitiative', danger: true },
+    // { Icon: DeleteOutlined, type: 'deleteInputInitiative', danger: true },
 ];
 
 
@@ -50,7 +50,7 @@ export default function Initiative({dispatch, state}) {
                     />
                 </Col>
             </Row>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[8, 8]}>
                 <Keyboard dispatch={dispatch} />
             </Row>
         </>
