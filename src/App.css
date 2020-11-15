@@ -57,3 +57,7 @@ body, html {
 .row-dragging .drag-visible {
     visibility: visible;
 }
+
+tr:first-child {
+    background-color: #e6f7ff;
+}

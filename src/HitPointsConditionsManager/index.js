@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Row, Col, Checkbox } from 'antd';
+import { Button, Row, Col, Checkbox, Tag } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const buttonsHitpoints = [
@@ -15,19 +15,19 @@ const buttonsHitpoints = [
 
 const buttonsConditions = [
     { color: "grey" , condition: "Petrified", add: 'editCondition', remove: 'removeCondition' },
-    { color: "grey" , condition: "Incapacitated", add: 'editCondition', remove: 'removeCondition' },
-    { color: "volcano" , condition: "Unconscious", add: 'editCondition', remove: 'removeCondition' },
+    { color: "lime" , condition: "Incapacitated", add: 'editCondition', remove: 'removeCondition' },
+    { color: "gold" , condition: "Unconscious", add: 'editCondition', remove: 'removeCondition' },
     { color: "orange" , condition: "Paralyzed", add: 'editCondition', remove: 'removeCondition' },
-    { color: "brown" , condition: "Invisible", add: 'editCondition', remove: 'removeCondition' },
-    { color: "darkblue" , condition: "Deafened", add: 'editCondition', remove: 'removeCondition' },
+    { color: "cornflowerblue" , condition: "Invisible", add: 'editCondition', remove: 'removeCondition' },
+    { color: "cyan" , condition: "Deafened", add: 'editCondition', remove: 'removeCondition' },
     { color: "geekblue" , condition: "Blinded", add: 'editCondition', remove: 'removeCondition' },
     { color: "blue" , condition: "Frightened", add: 'editCondition', remove: 'removeCondition' },
     { color: "purple" , condition: "Grappled", add: 'editCondition', remove: 'removeCondition' },
     { color: "burlywood" , condition: "Restrained", add: 'editCondition', remove: 'removeCondition' },
     { color: "magenta" , condition: "Charmed", add: 'editCondition', remove: 'removeCondition' },
     { color: "green" , condition: "Poisoned", add: 'editCondition', remove: 'removeCondition' },
-    { color: "gold" , condition: "Stunned", add: 'editCondition', remove: 'removeCondition' },
-    { color: "cyan" , condition: "Prone", add: 'editCondition', remove: 'removeCondition' },
+    { color: "red" , condition: "Stunned", add: 'editCondition', remove: 'removeCondition' },
+    { color: "volcano" , condition: "Prone", add: 'editCondition', remove: 'removeCondition' },
 ];
 
 function KeyboardConditions({dispatch, conditions}) {
@@ -37,14 +37,13 @@ function KeyboardConditions({dispatch, conditions}) {
                 const hasIt = conditions?.find( cond => cond.condition === condition);
                 return (
                     <Col span={6} key={condition}>
-                        <Button
-                            type="ghost"
-                            style={{color}}
-                            size="small"
-                            style={{ minWidth: '70px', height: '100%' }}
-                            onClick={() => dispatch({ type: hasIt ? remove : add, value: { condition,  color }  })} >
-                            {hasIt && <DeleteOutlined /> } {condition}
-                        </Button>
+                        <Tag
+                            key={condition}
+                            color={'cornflowerblue'}
+                            onClick={ () =>  dispatch({ type: hasIt ? remove : add, value: { condition,  color }  })}
+                        >
+                           {hasIt && <DeleteOutlined /> } {condition}
+                        </Tag>
                     </Col>
                 );
             })

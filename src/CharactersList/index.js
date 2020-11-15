@@ -1,43 +1,40 @@
 import React, {useMemo} from 'react';
-import { Table, Tag } from 'antd';
+import { Table, Tag, Modal, Row, Col, Button } from 'antd';
 import { sortableContainer, sortableElement, sortableHandle, arrayMove } from 'react-sortable-hoc';
 
-import { MenuOutlined } from '@ant-design/icons';
-import { Row, Col, Button } from 'antd';
+import { DeleteOutlined, MenuOutlined } from '@ant-design/icons';
+
+
+const { confirm } = Modal;
 
 const DragHandle = sortableHandle(() => (
-    <MenuOutlined style={{ cursor: 'pointer', color: '#999' }} />
+    <MenuOutlined style={{ width: '15px' ,cursor: 'pointer', color: '#999' }} />
 ));
 
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
 
-const CharacterList = ({ state: { initiatives: initiativesRaw, initiatives_position }, dispatch, wider }) => {
-    const initiatives = initiativesRaw
-                        .slice(initiatives_position)
-                        .concat(
-                            initiativesRaw
-                                .slice(0, initiatives_position)
-                        );
+const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
 
     const columns = useMemo(() => {
         const fields = [
             {
-                title: 'Sort',
                 dataIndex: 'sort',
-                width: 30,
+                width: 15,
                 className: 'drag-visible',
                 render: () => <DragHandle />,
             },
             {
                 title: 'Name',
-                dataIndex: 'name',
-                key: 'name',
+                width: '50px',
                 className: 'drag-visible',
+                render: ({name, monster}) => (
+                    <span style={{ fontWeight: 500 , color: monster ? 'red' : 'green'  }}>{name}</span>
+                )
             },
             {
-                title: 'Initiative',
+                title: 'Init',
                 key: 'value',
                 dataIndex: 'value',
             }
@@ -46,29 +43,36 @@ const CharacterList = ({ state: { initiatives: initiativesRaw, initiatives_posit
         if(wider){
             fields.push({
                 title: 'HP',
-                dataIndex: 'hitpoints',
-                key: 'hitpoints',
+                render: ({hitpoints, monster}) => (
+                    <span style={{ fontWeight: 500 , color: hitpoints > 0 || !monster ? 'green' : 'red'}}>{hitpoints}</span>
+                )
             });
             fields.push({
                 title: 'Conditions',
                 dataIndex: 'conditions',
                 key: 'conditions',
                 render: tags => (
-                    <span>
+                    <div style={{ display: 'flex', flexDirection: 'column'}}>
                       {tags.map( ({color, condition}) => (
                           <Tag color={color} key={condition}>
                             {condition}
                           </Tag>
                         ))}
-                    </span>
+                    </div>
                   ),
             });
             fields.push({
-                title: 'Action',
                 key: 'id',
-                dataIndex: 'id',
-                render: id => (
-                  <a onClick={() => dispatch({ type: 'removeInitiative', value: id})}>Delete</a>
+                render: ({id, name}) => (
+                  <DeleteOutlined onClick={() => {
+                    confirm({
+                        title: `Do you Want to delete ${name ?? ''}?`,
+                        icon: null,
+                        onOk() {
+                            dispatch({ type: 'removeInitiative', value: id});
+                        },
+                      });
+                    }} />
                 ),
               },);
         }
@@ -77,9 +81,8 @@ const CharacterList = ({ state: { initiatives: initiativesRaw, initiatives_posit
 
     const onSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex !== newIndex) {
-            const newData = arrayMove([].concat(initiativesRaw), oldIndex, newIndex).filter(el => !!el);
-            console.log('Sorted items: ', newData);
-            dispatch({ type: "sortInitiatives", initiatives: newData });
+            const newInitiatives = arrayMove([].concat(initiatives), oldIndex, newIndex).filter(el => !!el);
+            dispatch({ type: "sortInitiatives", initiatives: newInitiatives });
         }
     };
 
@@ -105,7 +108,7 @@ const CharacterList = ({ state: { initiatives: initiativesRaw, initiatives_posit
                         size="large"
                         style={{ maxWidth: '150px', height: '100%' }}
                         type="primary"
-                        disabled={initiativesRaw.length < 2}
+                        disabled={initiatives.length < 2}
                         onClick={() => dispatch({ type: "back" })} >
                         Back
                      </Button>
@@ -115,13 +118,14 @@ const CharacterList = ({ state: { initiatives: initiativesRaw, initiatives_posit
                         size="large"
                         style={{ maxWidth: '150px', height: '100%' }}
                         type="primary"
-                        disabled={initiativesRaw.length < 2}
+                        disabled={initiatives.length < 2}
                         onClick={() => dispatch({ type: "next" })} >
                         Next
                          </Button>
                 </Col>
             </Row>
             <Table
+                style={{ maxHeight: 'calc(100vh - 40px)', overflow: 'scroll', overflowX: 'hidden' }}
                 pagination={false}
                 dataSource={initiatives}
                 columns={columns}
@@ -142,38 +146,3 @@ const CharacterList = ({ state: { initiatives: initiativesRaw, initiatives_posit
     );
 }
 export default CharacterList;
-// export default function CharactersList({ state, dispatch, wider }) {
-//     return (
-//         <>
-//             <Menu style={{ maxHeight: 'calc(100vh - 40px)', overflow: 'scroll', overflowX: 'hidden' }} >
-//                 {state.initiatives
-//                     .slice(state.initiatives_position)
-//                     .concat(
-//                         state.initiatives
-//                             .slice(0, state.initiatives_position)
-//                     )
-//                     .map(({ value, name, id, hitpoints, monster }) => (
-//                         <Menu.Item
-//                             style={{ height: '50px' }}
-//                             key={id}
-//                             onClick={() => dispatch({ type: "select", value: id })}
-//                             icon={<Avatar size={50} style={{ fontSize: 25, fontWeight: 700, color: 'blue' }}>{value}</Avatar>}>
-//                             <Avatar
-//                                 size={50}
-//                                 style={{
-//                                     textAlign: 'end',
-//                                     fontSize: 25,
-//                                     fontWeight: 500,
-//                                     marginLeft: 20,
-//                                     color: 'white',
-//                                     backgroundColor: hitpoints > 0 ? 'green' : 'red'
-//                                 }}>
-//                                 {hitpoints}
-//                             </Avatar>
-//                             <span className="initiative">{name}</span>
-//                         </Menu.Item>
-//                     ))}
-//             </Menu>
-//         </>
-//     )
-// }

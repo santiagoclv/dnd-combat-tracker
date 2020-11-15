@@ -7,31 +7,21 @@ import HitPointsConditionsManager from './HitPointsConditionsManager';
 
 const { TabPane } = Tabs;
 
-const initialState = { initiatives: [], initiatives_position: 0, selected: null, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
+const initialState = { initiatives: [], selected: null, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'addInitiative': {
-            const index = state.initiatives.findIndex(initiative => initiative.value <= state.inputInitiative);
             const initiative = {
                 value: state.inputInitiative ?? 0,
-                name: state.inputName,
+                name: state.inputName ?? '',
                 hitpoints: state.inputHitpoints,
                 id: Date.now(),
                 monster: action.monster,
                 conditions: []
             };
-            if (index === -1) {
-                const initiatives = [initiative, ...state.initiatives].sort((a, b) => b.value - a.value);
-                return { ...state, initiatives, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
-            } else {
-                const initiatives = state.initiatives
-                    .slice(0, index)
-                    .concat(initiative)
-                    .concat(state.initiatives.slice(index))
-                    .sort((a, b) => b.value - a.value);
-                return { ...state, initiatives, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
-            }
+            const initiatives = [...state.initiatives, initiative].sort((a, b) => b.value - a.value);
+            return { ...state, initiatives, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
         }
         case 'sortInitiatives': {
             return { ...state, initiatives: action.initiatives };
@@ -66,15 +56,15 @@ function reducer(state, action) {
             return { ...state, inputInitiative: -state.inputInitiative };
         }
         case 'next': {
-            return { ...state, initiatives_position: (state.initiatives_position + 1) % state.initiatives.length };
+            return { 
+                ...state,
+                initiatives: state.initiatives.slice(1).concat(state.initiatives.slice(0, 1))
+            };
         }
         case 'back': {
             return {
                 ...state,
-                initiatives_position:
-                    state.initiatives_position === 0
-                        ? state.initiatives.length - 1
-                        : state.initiatives_position - 1
+                initiatives: state.initiatives.slice(-1).concat(state.initiatives.slice(0, -1))
             };
         }
         case 'select': {

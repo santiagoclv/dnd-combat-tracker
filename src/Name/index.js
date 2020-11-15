@@ -30,6 +30,18 @@ const buttonLetters = [
     { value : "b", type: "writeInputName" },
     { value : "n", type: "writeInputName" },
     { value : "m", type: "writeInputName" },
+    { value : "_", type: "writeInputName" },
+    { value : "??", type: "writeInputName" },
+    { value : "1", type: "writeInputName" },
+    { value : "2", type: "writeInputName" },
+    { value : "3", type: "writeInputName" },
+    { value : "4", type: "writeInputName" },
+    { value : "5", type: "writeInputName" },
+    { value : "6", type: "writeInputName" },
+    { value : "7", type: "writeInputName" },
+    { value : "8", type: "writeInputName" },
+    { value : "9", type: "writeInputName" },
+    { value : "0", type: "writeInputName" },
 ];
 
 function Keyboard({dispatch, extraWords}) {
