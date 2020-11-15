@@ -1,29 +1,11 @@
-import React, { useReducer, useState } from 'react';
-import { Row, Col, Button, Avatar, Menu, Tabs, Steps } from 'antd';
-
-import { DeleteOutlined } from '@ant-design/icons';
-
-import Initiative from './Initiative';
-import HitPoints from './HitPoints';
-import HitPointsEditor from './HitPointsEditor';
-import Name from './Name';
+import React, { useEffect, useReducer, useState } from 'react';
+import { Row, Col, Tabs } from 'antd';
+import cloneDeep from 'lodash/cloneDeep';
+import CharactersList from './CharactersList';
+import AddCharacter from './AddCharacter';
+import HitPointsConditionsManager from './HitPointsConditionsManager';
 
 const { TabPane } = Tabs;
-const { Step } = Steps;
-
-const steps = [
-
-    {
-        title: 'Name',
-    },
-    {
-        title: 'Initiative',
-    },
-    {
-        title: 'Hit Points',
-    },
-];
-
 
 const initialState = { initiatives: [], initiatives_position: 0, selected: null, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
 
@@ -36,23 +18,28 @@ function reducer(state, action) {
                 name: state.inputName,
                 hitpoints: state.inputHitpoints,
                 id: Date.now(),
-                monster: action.monster
+                monster: action.monster,
+                conditions: []
             };
             if (index === -1) {
-                const initiatives = [initiative, ...state.initiatives].sort((a, b) => a.value - b.value);
+                const initiatives = [initiative, ...state.initiatives].sort((a, b) => b.value - a.value);
                 return { ...state, initiatives, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
             } else {
                 const initiatives = state.initiatives
                     .slice(0, index)
                     .concat(initiative)
                     .concat(state.initiatives.slice(index))
-                    .sort((a, b) => a.value - b.value);
+                    .sort((a, b) => b.value - a.value);
                 return { ...state, initiatives, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
             }
         }
+        case 'sortInitiatives': {
+            return { ...state, initiatives: action.initiatives };
+        }
         case 'removeInitiative': {
-            const initiatives = state.initiatives.filter(({ value, name }) => value !== action.value && name !== action.name);
-            return { ...state, initiatives };
+            const initiatives = state.initiatives.filter(({ id }) => id !== action.value);
+
+            return { ...state, initiatives, selected: state.selected === action.value ? null : state.selected};
         }
         case 'writeInputInitiative': {
             const inputInitiative = parseInt(state.inputInitiative + action.value);
@@ -95,11 +82,34 @@ function reducer(state, action) {
         }
         case 'editHitpoints': {
             const initiatives = state.initiatives.map(ini => {
-                const copy_ini = { ...ini };
                 if (ini.id === state.selected) {
-                    copy_ini.hitpoints = copy_ini.hitpoints + action.value;
+                    const copy = cloneDeep(ini);
+                    copy.hitpoints = copy.hitpoints + action.value;
+                    return copy;
                 }
-                return copy_ini;
+                return ini;
+            })
+            return { ...state, initiatives };
+        }
+        case 'editCondition': {
+            const initiatives = state.initiatives.map(ini => {
+                if (ini.id === state.selected) {
+                    const copy = cloneDeep(ini);
+                    copy.conditions.push(action.value);
+                    return copy;
+                }
+                return ini;
+            })
+            return { ...state, initiatives };
+        }
+        case 'removeCondition': {
+            const initiatives = state.initiatives.map(ini => {
+                if (ini.id === state.selected) {
+                    const copy = cloneDeep(ini);
+                    copy.conditions = copy.conditions.filter( cond => cond.condition !== action.value.condition);
+                    return copy;
+                }
+                return ini;
             })
             return { ...state, initiatives };
         }
@@ -113,139 +123,31 @@ function reducer(state, action) {
 
 export default function App() {
     const [state, dispatch] = useReducer(reducer, initialState);
-    const [current, setCurrent] = useState(0);
+    const [activeTab, setTab] = useState("2");
+
+    useEffect(() => {
+        if(!state.selected){
+            setTab("2");
+        } else {
+            setTab("1");
+        }
+    }, [state.selected]);
 
     return (
         <Row gutter={[16, 16]} style={{ width: "100%", height: "100%" }}>
-            <Col span={8} >
-                <Row style={{ height: '40px' }} >
-                    <Col span={12}>
-                        <Button
-                            size="large"
-                            style={{ maxWidth: '150px', height: '100%' }}
-                            type="primary"
-                            disabled={state.initiatives.length < 2}
-                            onClick={() => dispatch({ type: "back" })} >
-                            Back
-                    </Button>
-                    </Col>
-                    <Col span={12} style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                        <Button
-                            size="large"
-                            style={{ maxWidth: '150px', height: '100%' }}
-                            type="primary"
-                            disabled={state.initiatives.length < 2}
-                            onClick={() => dispatch({ type: "next" })} >
-                            Next
-                        </Button>
-                    </Col>
-                </Row>
-                <Menu style={{ maxHeight: 'calc(100vh - 40px)', overflow: 'scroll', overflowX: 'hidden' }} >
-                    {state.initiatives
-                        .slice(state.initiatives_position)
-                        .concat(
-                            state.initiatives
-                                .slice(0, state.initiatives_position)
-                        )
-                        .map(({ value, name, id, hitpoints, monster }) => (
-                            <Menu.Item
-                                style={{ height: '50px' }}
-                                key={id}
-                                onClick={() => dispatch({ type: "select", value: id })}
-                                icon={<Avatar size={50} style={{ fontSize: 25, fontWeight: 700, color: 'blue' }}>{value}</Avatar>}>
-                                { monster && <Avatar
-                                    size={50}
-                                    style={{
-                                        textAlign: 'end',
-                                        fontSize: 25,
-                                        fontWeight: 500,
-                                        marginLeft: 20,
-                                        color: 'white',
-                                        backgroundColor: hitpoints > 0 ? 'green' : 'red'
-                                    }}>
-                                    {hitpoints}
-                                </Avatar>}
-                                <span className="initiative">{name}</span>
-                            </Menu.Item>
-                        ))}
-                </Menu>
+            <Col span={activeTab === "2" ? 8 : 12} >
+                <CharactersList state={state} dispatch={dispatch} wider={activeTab === "1"} />
             </Col>
-            <Col span={16} >
-                <Tabs defaultActiveKey="2">
-                    <TabPane tab="Add NPC/PC" key="2">
-                        <Steps current={current}>
-                            {steps.map(item => (
-                                <Step key={item.title} title={item.title} />
-                            ))}
-                        </Steps>
-                        {
-                            current === 1 && <Initiative state={state} dispatch={dispatch} />
-                        }
-                        {
-                            current === 0 && <Name state={state} dispatch={dispatch} />
-                        }
-                        {
-                            current === 2 && <HitPoints state={state} dispatch={dispatch} />
-                        }
-                        <div className="steps-action">
-                            {
-                                current === 0 &&
-                                <Button
-                                    danger
-                                    style={{width: '100px'}}
-                                    type="primary" onClick={() => dispatch({ type: 'deleteInputName' })} >
-                                    <DeleteOutlined />
-                                </Button>
-                            }
-                            {
-                                current === 1 &&
-                                <Button
-                                    danger
-                                    style={{width: '100px'}}
-                                    type="primary" onClick={() => dispatch({ type: 'deleteInputInitiative' })} >
-                                    <DeleteOutlined />
-                                </Button>
-                            }
-                            {
-                                current === 2 &&
-                                <Button
-                                    danger
-                                    style={{width: '100px'}}
-                                    type="primary" onClick={() => dispatch({ type: 'deleteInputHitpoints' })} >
-                                    <DeleteOutlined />
-                                </Button>
-                            }
-
-                            {current > 0 && (
-                                <Button onClick={() => setCurrent(current - 1)}>
-                                    Previous
-                                </Button>
-                            )}
-                            {current < steps.length - 1 && (
-                                <Button type="primary" onClick={() => setCurrent(current + 1)}>
-                                    Next
-                                </Button>
-                            )}
-
-                            {current === steps.length - 1 && (
-                                <Button type="primary" danger onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: true }) }}>
-                                    Done Monster
-                                </Button>
-                            )}
-                            {current === steps.length - 1 && (
-                                <Button type="primary" onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: false }) }}>
-                                    Done Player
-                                </Button>
-                            )}
-                        </div>
+            <Col  span={activeTab === "2" ? 16 : 12} >
+                <Tabs onChange={setTab} activeKey={activeTab}>
+                    <TabPane tab="Add Character" key="2">
+                        <AddCharacter state={state} dispatch={dispatch} />
                     </TabPane>
-                    <TabPane disabled={!state.selected} tab="Hit Points" key="1">
-                        <HitPointsEditor state={state} dispatch={dispatch} />
+                    <TabPane disabled={!state.selected} tab="Character Manager" key="1">
+                        <HitPointsConditionsManager state={state} dispatch={dispatch} />
                     </TabPane>
                 </Tabs>
             </Col>
         </Row>
-
-
     )
 }
