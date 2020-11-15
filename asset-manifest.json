@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/combat-tracker/static/css/main.6fa9bf40.chunk.css",
-    "main.js": "/combat-tracker/static/js/main.b190c3e1.chunk.js",
-    "main.js.map": "/combat-tracker/static/js/main.b190c3e1.chunk.js.map",
+    "main.css": "/combat-tracker/static/css/main.1b33a33c.chunk.css",
+    "main.js": "/combat-tracker/static/js/main.44881b09.chunk.js",
+    "main.js.map": "/combat-tracker/static/js/main.44881b09.chunk.js.map",
     "runtime-main.js": "/combat-tracker/static/js/runtime-main.166bd6a4.js",
     "runtime-main.js.map": "/combat-tracker/static/js/runtime-main.166bd6a4.js.map",
     "static/css/2.617c3bb8.chunk.css": "/combat-tracker/static/css/2.617c3bb8.chunk.css",
-    "static/js/2.2c09829b.chunk.js": "/combat-tracker/static/js/2.2c09829b.chunk.js",
-    "static/js/2.2c09829b.chunk.js.map": "/combat-tracker/static/js/2.2c09829b.chunk.js.map",
+    "static/js/2.45b90869.chunk.js": "/combat-tracker/static/js/2.45b90869.chunk.js",
+    "static/js/2.45b90869.chunk.js.map": "/combat-tracker/static/js/2.45b90869.chunk.js.map",
     "index.html": "/combat-tracker/index.html",
     "static/css/2.617c3bb8.chunk.css.map": "/combat-tracker/static/css/2.617c3bb8.chunk.css.map",
-    "static/css/main.6fa9bf40.chunk.css.map": "/combat-tracker/static/css/main.6fa9bf40.chunk.css.map",
-    "static/js/2.2c09829b.chunk.js.LICENSE.txt": "/combat-tracker/static/js/2.2c09829b.chunk.js.LICENSE.txt"
+    "static/css/main.1b33a33c.chunk.css.map": "/combat-tracker/static/css/main.1b33a33c.chunk.css.map",
+    "static/js/2.45b90869.chunk.js.LICENSE.txt": "/combat-tracker/static/js/2.45b90869.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.166bd6a4.js",
     "static/css/2.617c3bb8.chunk.css",
-    "static/js/2.2c09829b.chunk.js",
-    "static/css/main.6fa9bf40.chunk.css",
-    "static/js/main.b190c3e1.chunk.js"
+    "static/js/2.45b90869.chunk.js",
+    "static/css/main.1b33a33c.chunk.css",
+    "static/js/main.44881b09.chunk.js"
   ]
 }
