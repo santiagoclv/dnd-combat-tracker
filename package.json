@@ -1,6 +1,6 @@
 {
   "name": "combat-tracker",
-  "homepage": "https://santiagoclv.github.io/combat-tracker/",
+  "homepage": "https://santiagoclv.github.io/combat-tracker",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

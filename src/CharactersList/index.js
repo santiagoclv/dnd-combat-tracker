@@ -110,7 +110,7 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                 borderRight: 'solid 2px lightgrey'
             }} >
             <Table
-                style={{ height: 'calc(100vh - 40px)', overflow: 'scroll', overflowX: 'hidden' }}
+                style={{ height: 'calc(100vh - 35px)', overflow: 'scroll', overflowX: 'hidden' }}
                 pagination={false}
                 dataSource={initiatives}
                 columns={columns}

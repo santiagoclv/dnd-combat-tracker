@@ -135,12 +135,12 @@ export default function App({storedState, initialState}) {
     }, [state.selected]);
 
     return (
-        <Row gutter={[16, 16]} style={{ width: "100%", height: "100%" }}>
+        <Row style={{ width: "100%", height: "100%" }}>
             <Col span={activeTab === "2" ? 8 : 14} >
                 <CharactersList state={state} dispatch={dispatch} wider={activeTab === "1"} />
             </Col>
-            <Col  span={activeTab === "2" ? 16 : 10} >
-                <Tabs onChange={setTab} activeKey={activeTab}>
+            <Col span={activeTab === "2" ? 16 : 10} >
+                <Tabs style={{padding: 8}}  onChange={setTab} activeKey={activeTab}>
                     <TabPane tab="Add Character" key="2">
                         <AddCharacter state={state} dispatch={dispatch} />
                     </TabPane>
