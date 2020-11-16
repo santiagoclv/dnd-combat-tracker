@@ -3,16 +3,16 @@ import { Row, Col, Tabs } from 'antd';
 import cloneDeep from 'lodash/cloneDeep';
 import CharactersList from './CharactersList';
 import AddCharacter from './AddCharacter';
+import Settings from './Settings';
 import HitPointsConditionsManager from './HitPointsConditionsManager';
+import { SettingOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
-
-const initialState = { initiatives: [], selected: null, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
 
 function reducer(state, action) {
     switch (action.type) {
         case 'addInitiative': {
-            const initiative = {
+            const character = {
                 value: state.inputInitiative ?? 0,
                 name: state.inputName ?? '',
                 hitpoints: state.inputHitpoints,
@@ -20,15 +20,17 @@ function reducer(state, action) {
                 monster: action.monster,
                 conditions: []
             };
-            const initiatives = [...state.initiatives, initiative].sort((a, b) => b.value - a.value);
+            const initiatives = [...state.initiatives, character].sort((a, b) => b.value - a.value);
             return { ...state, initiatives, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
+        }
+        case 'deleteAll': {
+            return { initiatives: [], selected: null, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
         }
         case 'sortInitiatives': {
             return { ...state, initiatives: action.initiatives };
         }
-        case 'removeInitiative': {
+        case 'removeCharacter': {
             const initiatives = state.initiatives.filter(({ id }) => id !== action.value);
-
             return { ...state, initiatives, selected: state.selected === action.value ? null : state.selected};
         }
         case 'writeInputInitiative': {
@@ -50,7 +52,7 @@ function reducer(state, action) {
             return { ...state, inputHitpoints: 0 };
         }
         case 'deleteInputName': {
-            return { ...state, inputName: '' };
+            return { ...state, inputName: state?.inputName?.slice(0, -1) ?? '' };
         }
         case 'negativeInputInitiative': {
             return { ...state, inputInitiative: -state.inputInitiative };
@@ -68,7 +70,14 @@ function reducer(state, action) {
             };
         }
         case 'select': {
-            return { ...state, selected: action.value };
+            const character = state.initiatives.find(({ id }) => id === action.value);
+            return { 
+                ...state,
+                selected: character.id,
+                inputInitiative: character?.value,
+                inputName: character?.name,
+                inputHitpoints: character?.hitpoints
+            };
         }
         case 'editHitpoints': {
             const initiatives = state.initiatives.map(ini => {
@@ -111,7 +120,7 @@ function reducer(state, action) {
     }
 }
 
-export default function App({storedState}) {
+export default function App({storedState, initialState}) {
     const [state, dispatch] = useReducer(reducer, storedState ?? initialState);
     const [activeTab, setTab] = useState("2");
 
@@ -119,27 +128,27 @@ export default function App({storedState}) {
         localStorage.setItem("storedState", JSON.stringify(state))
     }, [state]);
 
-
     useEffect(() => {
         if(!state.selected){
             setTab("2");
-        } else {
-            setTab("1");
         }
     }, [state.selected]);
 
     return (
         <Row gutter={[16, 16]} style={{ width: "100%", height: "100%" }}>
-            <Col span={activeTab === "2" ? 8 : 12} >
+            <Col span={activeTab === "2" ? 8 : 14} >
                 <CharactersList state={state} dispatch={dispatch} wider={activeTab === "1"} />
             </Col>
-            <Col  span={activeTab === "2" ? 16 : 12} >
+            <Col  span={activeTab === "2" ? 16 : 10} >
                 <Tabs onChange={setTab} activeKey={activeTab}>
                     <TabPane tab="Add Character" key="2">
                         <AddCharacter state={state} dispatch={dispatch} />
                     </TabPane>
                     <TabPane disabled={!state.selected} tab="Character Manager" key="1">
                         <HitPointsConditionsManager state={state} dispatch={dispatch} />
+                    </TabPane>
+                    <TabPane tab={<> <SettingOutlined /> Settings</>} key="3">
+                        <Settings state={state} dispatch={dispatch} />
                     </TabPane>
                 </Tabs>
             </Col>

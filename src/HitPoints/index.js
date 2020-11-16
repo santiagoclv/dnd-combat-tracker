@@ -44,7 +44,7 @@ export default function HitPoints({dispatch, state}) {
                 <Col span={8} >
                     <Statistic
                         style={{ margin : 10}}
-                        value={state.inputHitpoints}
+                        value={"HP: " + state.inputHitpoints}
                         precision={0}
                     />
                 </Col>

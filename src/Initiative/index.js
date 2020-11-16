@@ -44,7 +44,7 @@ export default function Initiative({dispatch, state}) {
                 <Col span={8} >
                     <Statistic
                         style={{ margin : 10}}
-                        value={state.inputInitiative}
+                        value={"Initiative: " + state.inputInitiative}
                         precision={0}
                     />
                 </Col>

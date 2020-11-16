@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import { Button, Steps } from 'antd';
 
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, RollbackOutlined } from '@ant-design/icons';
 
 import Initiative from '../Initiative';
 import HitPoints from '../HitPoints';
@@ -47,7 +47,7 @@ export default function AddCharacter({state, dispatch}) {
                                     danger
                                     style={{width: '100px'}}
                                     type="primary" onClick={() => dispatch({ type: 'deleteInputName' })} >
-                                    <DeleteOutlined />
+                                    <RollbackOutlined />
                                 </Button>
                             }
                             {
@@ -82,12 +82,12 @@ export default function AddCharacter({state, dispatch}) {
 
                             {current === steps.length - 1 && (
                                 <Button type="primary" danger onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: true }) }}>
-                                    Done Monster
+                                    Create as a Monster
                                 </Button>
                             )}
                             {current === steps.length - 1 && (
                                 <Button type="primary" onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: false }) }}>
-                                    Done Player
+                                    Create as a Player
                                 </Button>
                             )}
                         </div> 

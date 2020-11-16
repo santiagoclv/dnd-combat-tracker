@@ -65,14 +65,14 @@ export default function Name({dispatch, state}) {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const players_param = urlParams.get('players') ? urlParams.get('players')  : null;
-    const players = players_param?.split(",")?.map( ply => ({ value : ply, type: "writeInputName" })) ?? [];
+    const players = players_param?.split("-")?.map( ply => ({ value : ply, type: "writeInputName" })) ?? [];
 
     return <>
             <Row gutter={[16, 16]} justify="center">
-                <Col span={8} >
+                <Col>
                     <Statistic
                         style={{ margin : 10}}
-                        value={state.inputName}
+                        value={"Name: " + state.inputName}
                     />
                 </Col>
             </Row>

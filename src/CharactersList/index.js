@@ -69,7 +69,7 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                         title: `Do you Want to delete ${name ?? ''}?`,
                         icon: null,
                         onOk() {
-                            dispatch({ type: 'removeInitiative', value: id});
+                            dispatch({ type: 'removeCharacter', value: id});
                         },
                       });
                     }} />
@@ -101,31 +101,16 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
     );
 
     return (
-        <>
-            <Row style={{ height: '40px' }} >
-                <Col span={12}>
-                    <Button
-                        size="large"
-                        style={{ maxWidth: '150px', height: '100%' }}
-                        type="primary"
-                        disabled={initiatives.length < 2}
-                        onClick={() => dispatch({ type: "back" })} >
-                        Back
-                     </Button>
-                </Col>
-                <Col span={12} style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                    <Button
-                        size="large"
-                        style={{ maxWidth: '150px', height: '100%' }}
-                        type="primary"
-                        disabled={initiatives.length < 2}
-                        onClick={() => dispatch({ type: "next" })} >
-                        Next
-                         </Button>
-                </Col>
-            </Row>
+        <div style={{ 
+                height: '100vh',
+                overflowX: 'hidden',
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                borderRight: 'solid 2px lightgrey'
+            }} >
             <Table
-                style={{ maxHeight: 'calc(100vh - 40px)', overflow: 'scroll', overflowX: 'hidden' }}
+                style={{ height: 'calc(100vh - 40px)', overflow: 'scroll', overflowX: 'hidden' }}
                 pagination={false}
                 dataSource={initiatives}
                 columns={columns}
@@ -141,8 +126,29 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                     },
                 }}
             />
-
-        </>
+            <Row style={{ height: '40px' }} >
+                <Col span={12}>
+                    <Button
+                        size="large"
+                        style={{ maxWidth: '150px', height: '100%' }}
+                        type="primary"
+                        disabled={initiatives.length < 2}
+                        onClick={() => dispatch({ type: "back" })} >
+                        Go Back
+                     </Button>
+                </Col>
+                <Col span={12} style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                    <Button
+                        size="large"
+                        style={{ maxWidth: '150px', height: '100%' }}
+                        type="primary"
+                        disabled={initiatives.length < 2}
+                        onClick={() => dispatch({ type: "next" })} >
+                        Next Character
+                    </Button>
+                </Col>
+            </Row>
+        </div>
     );
 }
 export default CharacterList;
