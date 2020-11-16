@@ -111,9 +111,14 @@ function reducer(state, action) {
     }
 }
 
-export default function App() {
-    const [state, dispatch] = useReducer(reducer, initialState);
+export default function App({storedState}) {
+    const [state, dispatch] = useReducer(reducer, storedState ?? initialState);
     const [activeTab, setTab] = useState("2");
+
+    useEffect(() => {
+        localStorage.setItem("storedState", JSON.stringify(state))
+    }, [state]);
+
 
     useEffect(() => {
         if(!state.selected){

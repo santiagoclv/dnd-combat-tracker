@@ -5,4 +5,11 @@ import App from './App';
 
 import './App.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+try {
+    const string_state = localStorage.getItem("storedState");
+    const state = string_state ? JSON.parse(string_state) : null;
+    ReactDOM.render(<App storedState={state} />, document.getElementById('root'));
+} catch (error) {
+    ReactDOM.render(<App />, document.getElementById('root'));
+}
+
