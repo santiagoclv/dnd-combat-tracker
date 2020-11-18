@@ -74,7 +74,7 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                       });
                     }} />
                 ),
-              },);
+              });
         }
         return fields;
     }, [wider, dispatch]);

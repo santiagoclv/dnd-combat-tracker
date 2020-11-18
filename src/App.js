@@ -26,6 +26,9 @@ function reducer(state, action) {
         case 'deleteAll': {
             return { initiatives: [], selected: null, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
         }
+        case 'loadState': {
+            return action.value;
+        }
         case 'sortInitiatives': {
             return { ...state, initiatives: action.initiatives };
         }
