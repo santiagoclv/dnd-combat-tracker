@@ -5,6 +5,7 @@
 * turns by initiative
 * Characters' hit points
 * Characters' conditions
+* Save/Load generated combat scenes 
 
 ## Pre loadead character names
 
