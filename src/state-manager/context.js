@@ -24,4 +24,4 @@ export const ContextWrapper = ({ children }) => {
     );
 };
 
-export const useStateValue = () => useContext(ContextWrapper);
+export const useStateValue = () => useContext(StateContext);
