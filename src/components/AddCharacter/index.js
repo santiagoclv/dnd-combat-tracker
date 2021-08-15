@@ -8,6 +8,9 @@ import Initiative from '../Initiative';
 import HitPoints from '../HitPoints';
 import Name from '../Name';
 
+import { useStateValue } from '../../state-manager/context';
+import { ADD_INITIATIVE, DELETE_INPUT_HP, DELETE_INPUT_INITIATIVE, DELETE_INPUT_NAME } from '../../state-manager/actions';
+
 const { Step } = Steps;
 
 const steps = [
@@ -22,7 +25,8 @@ const steps = [
     },
 ];
 
-export default function AddCharacter({state, dispatch}) {
+export default function AddCharacter() {
+    const [, dispatch] = useStateValue();
     const [current, setCurrent] = useState(0);
     return (
         <>
@@ -32,13 +36,13 @@ export default function AddCharacter({state, dispatch}) {
                             ))}
                         </Steps>
                         {
-                            current === 1 && <Initiative state={state} dispatch={dispatch} />
+                            current === 1 && <Initiative />
                         }
                         {
-                            current === 0 && <Name state={state} dispatch={dispatch} />
+                            current === 0 && <Name />
                         }
                         {
-                            current === 2 && <HitPoints state={state} dispatch={dispatch} />
+                            current === 2 && <HitPoints />
                         }
                         <div className="steps-action">
                             {
@@ -46,7 +50,7 @@ export default function AddCharacter({state, dispatch}) {
                                 <Button
                                     danger
                                     style={{width: '100px'}}
-                                    type="primary" onClick={() => dispatch({ type: 'deleteInputName' })} >
+                                    type="primary" onClick={() => dispatch({ type: DELETE_INPUT_NAME })} >
                                     <RollbackOutlined />
                                 </Button>
                             }
@@ -55,7 +59,7 @@ export default function AddCharacter({state, dispatch}) {
                                 <Button
                                     danger
                                     style={{width: '100px'}}
-                                    type="primary" onClick={() => dispatch({ type: 'deleteInputInitiative' })} >
+                                    type="primary" onClick={() => dispatch({ type: DELETE_INPUT_INITIATIVE })} >
                                     <DeleteOutlined />
                                 </Button>
                             }
@@ -64,7 +68,7 @@ export default function AddCharacter({state, dispatch}) {
                                 <Button
                                     danger
                                     style={{width: '100px'}}
-                                    type="primary" onClick={() => dispatch({ type: 'deleteInputHitpoints' })} >
+                                    type="primary" onClick={() => dispatch({ type: DELETE_INPUT_HP })} >
                                     <DeleteOutlined />
                                 </Button>
                             }
@@ -81,12 +85,12 @@ export default function AddCharacter({state, dispatch}) {
                             )}
 
                             {current === steps.length - 1 && (
-                                <Button type="primary" danger onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: true }) }}>
+                                <Button type="primary" danger onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, monster: true }) }}>
                                     Create as a Monster
                                 </Button>
                             )}
                             {current === steps.length - 1 && (
-                                <Button type="primary" onClick={() => { setCurrent(0); dispatch({ type: 'addInitiative', monster: false }) }}>
+                                <Button type="primary" onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, monster: false }) }}>
                                     Create as a Player
                                 </Button>
                             )}

@@ -1,8 +1,10 @@
 import React, {useMemo} from 'react';
 import { Table, Tag, Modal, Row, Col, Button } from 'antd';
 import { sortableContainer, sortableElement, sortableHandle, arrayMove } from 'react-sortable-hoc';
-
 import { DeleteOutlined, MenuOutlined } from '@ant-design/icons';
+
+import { useStateValue } from '../../state-manager/context';
+import { BACK, NEXT, REMOVE_CHARACTER, SELECT, SET_INITIATIVES } from '../../state-manager/actions';
 
 
 const { confirm } = Modal;
@@ -15,7 +17,8 @@ const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
 
-const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
+const CharacterList = ({ wider }) => {
+    const [{ initiatives }, dispatch] = useStateValue();
 
     const columns = useMemo(() => {
         const fields = [
@@ -69,7 +72,7 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                         title: `Do you Want to delete ${name ?? ''}?`,
                         icon: null,
                         onOk() {
-                            dispatch({ type: 'removeCharacter', value: id});
+                            dispatch({ type: REMOVE_CHARACTER, value: id});
                         },
                       });
                     }} />
@@ -82,7 +85,7 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
     const onSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex !== newIndex) {
             const newInitiatives = arrayMove([].concat(initiatives), oldIndex, newIndex).filter(el => !!el);
-            dispatch({ type: "sortInitiatives", initiatives: newInitiatives });
+            dispatch({ type: SET_INITIATIVES, initiatives: newInitiatives });
         }
     };
 
@@ -117,7 +120,7 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                 rowKey="id"
                 rowSelection={{
                     type: 'radio',
-                    onChange: ([id]) => dispatch({ type: "select", value: id }),
+                    onChange: ([id]) => dispatch({ type: SELECT, value: id }),
                 }}
                 components={{
                     body: {
@@ -133,7 +136,7 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                         style={{ maxWidth: '150px', height: '100%' }}
                         type="primary"
                         disabled={initiatives.length < 2}
-                        onClick={() => dispatch({ type: "back" })} >
+                        onClick={() => dispatch({ type: BACK })} >
                         Go Back
                      </Button>
                 </Col>
@@ -143,12 +146,13 @@ const CharacterList = ({ state: { initiatives }, dispatch, wider }) => {
                         style={{ maxWidth: '150px', height: '100%' }}
                         type="primary"
                         disabled={initiatives.length < 2}
-                        onClick={() => dispatch({ type: "next" })} >
+                        onClick={() => dispatch({ type: NEXT })} >
                         Next Character
                     </Button>
                 </Col>
             </Row>
         </div>
     );
-}
+};
+
 export default CharacterList;

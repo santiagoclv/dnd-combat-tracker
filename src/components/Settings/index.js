@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { Button, Row, Col, Modal, Input, Table } from 'antd';
 import { DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 
+import { useStateValue } from '../../state-manager/context';
+import { DELETE_ALL, LOAD_STATE } from '../../state-manager/actions';
+
 const { confirm } = Modal;
 
 const saveState = (states) => {
@@ -9,12 +12,18 @@ const saveState = (states) => {
 }
 
 const getStates = () => {
-    const states_str = localStorage.getItem("states");
-    const states = states_str ? JSON.parse(states_str) : [];
+    let states = []
+    try {
+        const states_str = localStorage.getItem("states");
+        states = states_str ? JSON.parse(states_str) : [];
+    } catch (error) {
+        console.error("Error on getStates from settings", error);
+    }
     return states;
 }
 
-export default function Settings({ dispatch, state }) {
+export default function Settings() {
+    const [ state, dispatch ] = useStateValue();
     const [stateSelected, setstateSelected] = useState(null);
     const [name, setName] = useState(null);
     const [states, setStates] = useState(getStates());
@@ -30,7 +39,7 @@ export default function Settings({ dispatch, state }) {
                             title: `Do you want to delete everything in the store?`,
                             icon: null,
                             onOk() {
-                                dispatch({ type: 'deleteAll' });
+                                dispatch({ type: DELETE_ALL });
                             },
                         });
                     }} >
@@ -77,7 +86,7 @@ export default function Settings({ dispatch, state }) {
                             title: `Do you want to activate this fight set list?`,
                             icon: null,
                             onOk() {
-                                dispatch({ type: 'loadState', value: stateSelected });
+                                dispatch({ type: LOAD_STATE, value: stateSelected });
                             },
                         });
                     }} >
