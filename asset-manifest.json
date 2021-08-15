@@ -1,27 +1,23 @@
 {
   "files": {
     "main.css": "/combat-tracker/static/css/main.f50348b4.chunk.css",
-    "main.js": "/combat-tracker/static/js/main.7621a15c.chunk.js",
-    "main.js.map": "/combat-tracker/static/js/main.7621a15c.chunk.js.map",
-    "runtime-main.js": "/combat-tracker/static/js/runtime-main.2e4cbb46.js",
-    "runtime-main.js.map": "/combat-tracker/static/js/runtime-main.2e4cbb46.js.map",
-    "static/css/2.617c3bb8.chunk.css": "/combat-tracker/static/css/2.617c3bb8.chunk.css",
-    "static/js/2.4b6ca13a.chunk.js": "/combat-tracker/static/js/2.4b6ca13a.chunk.js",
-    "static/js/2.4b6ca13a.chunk.js.map": "/combat-tracker/static/js/2.4b6ca13a.chunk.js.map",
-    "static/js/3.73409943.chunk.js": "/combat-tracker/static/js/3.73409943.chunk.js",
-    "static/js/3.73409943.chunk.js.map": "/combat-tracker/static/js/3.73409943.chunk.js.map",
+    "main.js": "/combat-tracker/static/js/main.b7a3e76b.chunk.js",
+    "main.js.map": "/combat-tracker/static/js/main.b7a3e76b.chunk.js.map",
+    "runtime-main.js": "/combat-tracker/static/js/runtime-main.231bdedb.js",
+    "runtime-main.js.map": "/combat-tracker/static/js/runtime-main.231bdedb.js.map",
+    "static/css/2.97a13557.chunk.css": "/combat-tracker/static/css/2.97a13557.chunk.css",
+    "static/js/2.950f2bab.chunk.js": "/combat-tracker/static/js/2.950f2bab.chunk.js",
+    "static/js/2.950f2bab.chunk.js.map": "/combat-tracker/static/js/2.950f2bab.chunk.js.map",
     "index.html": "/combat-tracker/index.html",
-    "service-worker.js": "/combat-tracker/service-worker.js",
-    "service-worker.js.map": "/combat-tracker/service-worker.js.map",
-    "static/css/2.617c3bb8.chunk.css.map": "/combat-tracker/static/css/2.617c3bb8.chunk.css.map",
+    "static/css/2.97a13557.chunk.css.map": "/combat-tracker/static/css/2.97a13557.chunk.css.map",
     "static/css/main.f50348b4.chunk.css.map": "/combat-tracker/static/css/main.f50348b4.chunk.css.map",
-    "static/js/2.4b6ca13a.chunk.js.LICENSE.txt": "/combat-tracker/static/js/2.4b6ca13a.chunk.js.LICENSE.txt"
+    "static/js/2.950f2bab.chunk.js.LICENSE.txt": "/combat-tracker/static/js/2.950f2bab.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.2e4cbb46.js",
-    "static/css/2.617c3bb8.chunk.css",
-    "static/js/2.4b6ca13a.chunk.js",
+    "static/js/runtime-main.231bdedb.js",
+    "static/css/2.97a13557.chunk.css",
+    "static/js/2.950f2bab.chunk.js",
     "static/css/main.f50348b4.chunk.css",
-    "static/js/main.7621a15c.chunk.js"
+    "static/js/main.b7a3e76b.chunk.js"
   ]
 }
