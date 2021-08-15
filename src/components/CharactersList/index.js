@@ -16,7 +16,6 @@ const DragHandle = sortableHandle(() => (
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
-
 const CharacterList = ({ wider }) => {
     const [{ initiatives }, dispatch] = useStateValue();
 

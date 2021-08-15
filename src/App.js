@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Tabs } from 'antd';
-import CharactersList from './CharactersList';
-import AddCharacter from './AddCharacter';
-import Settings from './Settings';
-import HitPointsConditionsManager from './HitPointsConditionsManager';
 import { SettingOutlined } from '@ant-design/icons';
+
+import CharactersList from './components/CharactersList';
+import AddCharacter from './components/AddCharacter';
+import Settings from './components/Settings';
+import HitPointsConditionsManager from './components/HitPointsConditionsManager';
 
 import { useStateValue } from './state-manager/context';
 
