@@ -3,8 +3,7 @@ import isEqual from 'lodash/isEqual';
 
 import { reducer, initialState, init, STORED_STATE } from './reducer';
 
-export const StateContext = createContext();
-
+const StateContext = createContext();
 
 export const ContextWrapper = ({ children }) => {
     const store = useReducer(reducer, initialState, init);

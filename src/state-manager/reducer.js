@@ -18,8 +18,7 @@ import {
     SELECT,
     EDIT_HP,
     EDIT_CONDITION,
-    REMOVE_CONDITION,
-    CLEAN
+    REMOVE_CONDITION
 } from './actions';
 
 export const STORED_STATE = "storedState";
@@ -139,11 +138,8 @@ export const reducer = (state, action) => {
             })
             return { ...state, initiatives };
         }
-        case CLEAN: {
-            return { ...state, inputInitiative: 0, inputName: '', inputHitpoints: 0, selected: null };
-        }
         default:
-            throw new Error();
+            throw new Error(`Unknow action ${action.type}`);
     }
 };
 
@@ -155,6 +151,7 @@ export const init = () => {
         state.selected = null;
     } catch (error) {
         console.error("Error on init reducer", error);
+        state = initialState;
     }
     return state;
 };
