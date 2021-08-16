@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Tabs } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.css';
 
 import CharactersList from './components/CharactersList';
 import AddCharacter from './components/AddCharacter';
 import Settings from './components/Settings';
 import HitPointsConditionsManager from './components/HitPointsConditionsManager';
+import { useStateValue, ContextWrapper } from './state-manager/context';
 
-import { useStateValue } from './state-manager/context';
+import './App.css';
 
 const { TabPane } = Tabs;
 
-export default function App() {
+const App = () => {
     const [{ selected }] = useStateValue();
     const [activeTab, setTab] = useState("2");
 
@@ -42,3 +44,12 @@ export default function App() {
         </Row>
     )
 }
+
+const AppWrapped = () => (
+    <ContextWrapper>
+        <App />
+    </ContextWrapper>
+);
+
+
+export default AppWrapped;

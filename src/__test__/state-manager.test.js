@@ -19,9 +19,9 @@ import {
     // EDIT_HP,
     // EDIT_CONDITION,
     // REMOVE_CONDITION
-} from './actions';
-import { init, initialState, STORED_STATE } from './reducer';
-import { ContextWrapper, useStateValue } from './context';
+} from '../state-manager/actions';
+import { init, initialState, STORED_STATE } from '../state-manager/reducer';
+import { ContextWrapper, useStateValue } from '../state-manager/context';
 
 describe('State Manager', () => {
     describe('init function', () => {

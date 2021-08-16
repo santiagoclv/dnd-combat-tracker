@@ -12,8 +12,15 @@ beforeAll(() => {
         removeItem: jest.fn(key => localStorageMock.storage[key] = undefined),
         clear: jest.fn(() => localStorageMock.storage = {}),
     };
-    
+
     global.localStorage = localStorageMock;
 
     global.console.error = jest.fn();
+
+    global.matchMedia = global.matchMedia || function () {
+        return {
+            addListener: jest.fn(),
+            removeListener: jest.fn(),
+        };
+    };
 });
