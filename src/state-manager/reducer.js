@@ -103,8 +103,8 @@ export const reducer = (state, action) => {
         }
         case NEXT: {
             const { firstTurn } = state;
-            let time = state.time;
-            let rounds = state.rounds;
+            let time = state.time ?? 0;
+            let rounds = state.rounds ?? 0;
 
             const initiatives = state.initiatives.slice(1).concat(state.initiatives.slice(0, 1));
 
