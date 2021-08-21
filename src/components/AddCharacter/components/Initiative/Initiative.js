@@ -1,9 +1,13 @@
-import React from 'react';
 import { LineOutlined } from '@ant-design/icons';
-import { Button, Row, Col, Statistic } from 'antd';
+import { Button, Row, Col, Typography } from 'antd';
 
-import { useStateValue } from '../../state-manager/context';
-import { NEGATIVE_INPUT_INITIATIVE, WRITE_INPUT_INITIATIVE } from '../../state-manager/actions';
+import { useStateValue } from '../../../../state-manager/context';
+import {
+    NEGATIVE_INPUT_INITIATIVE,
+    WRITE_INPUT_INITIATIVE
+} from '../../../../state-manager/actions';
+
+const { Title } = Typography;
 
 const buttons = [
     { value: "1", type: WRITE_INPUT_INITIATIVE },
@@ -30,6 +34,7 @@ function Keyboard() {
                         <Button
                             danger={danger}
                             size="large"
+                            title={value ?? undefined}
                             style={{ minWidth: '70px', height: '100%' }}
                             type="primary" onClick={() => dispatch({ type, value })} >
                             {!!value ? value : <Icon />}
@@ -48,11 +53,7 @@ export default function Initiative() {
         <>
             <Row gutter={[16, 16]} justify="center">
                 <Col span={8} >
-                    <Statistic
-                        style={{ margin: 10 }}
-                        value={"Initiative: " + inputInitiative}
-                        precision={0}
-                    />
+                    <Title style={{ margin: 10 }} level={3}>Initiative: {inputInitiative}</Title>
                 </Col>
             </Row>
             <Row gutter={[8, 8]}>

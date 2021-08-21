@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
-import { Table, Tag, Modal, Row, Col, Button } from 'antd';
+import { Table, Tag, Modal, Row, Col, Button, Typography } from 'antd';
 import { sortableContainer, sortableElement, sortableHandle, arrayMove } from 'react-sortable-hoc';
 import { DeleteOutlined, MenuOutlined } from '@ant-design/icons';
 
 import { useStateValue } from '../../state-manager/context';
 import { BACK, NEXT, REMOVE_CHARACTER, SELECT, SET_INITIATIVES } from '../../state-manager/actions';
 
-
+const { Text } = Typography;
 const { confirm } = Modal;
 
 const DragHandle = sortableHandle(() => (
@@ -16,8 +16,14 @@ const DragHandle = sortableHandle(() => (
 const SortableItem = sortableElement(props => <tr {...props} />);
 const SortableContainer = sortableContainer(props => <tbody {...props} />);
 
-const CharacterList = ({ wider }) => {
-    const [{ initiatives }, dispatch] = useStateValue();
+const getTime = (count = 0) => {
+    var date = new Date(null);
+    date.setSeconds(count);
+    return date.toISOString().substr(11, 8);
+};
+
+const ListCharacters = ({ wider }) => {
+    const [{ initiatives, rounds, time }, dispatch] = useStateValue();
 
     const columns = useMemo(() => {
         const fields = [
@@ -129,24 +135,32 @@ const CharacterList = ({ wider }) => {
                 }}
             />
             <Row style={{ height: '40px' }} >
-                <Col span={12}>
+                <Col span={6}>
                     <Button
                         size="large"
                         style={{ maxWidth: '150px', height: '100%' }}
                         type="primary"
+                        title="Previous turn"
                         disabled={initiatives.length < 2}
                         onClick={() => dispatch({ type: BACK })} >
-                        Go Back
+                        Back
                      </Button>
                 </Col>
-                <Col span={12} style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                <Col span={6}>
+                    <Text keyboard>Rounds: {rounds}</Text>
+                </Col>
+                <Col span={6}>
+                    <Text keyboard>Time: {getTime(time)}</Text>
+                </Col>
+                <Col span={6} style={{ display: 'flex', flexDirection: 'row-reverse' }}>
                     <Button
                         size="large"
                         style={{ maxWidth: '150px', height: '100%' }}
                         type="primary"
+                        title="Next turn"
                         disabled={initiatives.length < 2}
                         onClick={() => dispatch({ type: NEXT })} >
-                        Next Character
+                        Next
                     </Button>
                 </Col>
             </Row>
@@ -154,4 +168,4 @@ const CharacterList = ({ wider }) => {
     );
 };
 
-export default CharacterList;
+export default ListCharacters;

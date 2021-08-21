@@ -28,7 +28,10 @@ export const initialState = {
     selected: null,
     inputInitiative: 0,
     inputName: '',
-    inputHitpoints: 0
+    inputHitpoints: 0,
+    time: 0,
+    rounds: 0,
+    firstTurn: null,
 };
 
 
@@ -44,7 +47,15 @@ export const reducer = (state, action) => {
                 conditions: []
             };
             const initiatives = [...state.initiatives, character].sort((a, b) => b.value - a.value);
-            return { ...state, initiatives, inputInitiative: 0, inputName: '', inputHitpoints: 0 };
+            const firstTurn = initiatives[0].id;
+            return { 
+                ...state,
+                firstTurn,
+                initiatives,
+                inputInitiative: 0,
+                inputName: '',
+                inputHitpoints: 0
+            };
         }
         case DELETE_ALL: {
             return initialState;
@@ -53,11 +64,18 @@ export const reducer = (state, action) => {
             return action.value;
         }
         case SET_INITIATIVES: {
-            return { ...state, initiatives: action.initiatives };
+            const firstTurn = action.initiatives[0].id;
+            return { ...state, initiatives: action.initiatives, firstTurn };
         }
         case REMOVE_CHARACTER: {
             const initiatives = state.initiatives.filter(({ id }) => id !== action.value);
-            return { ...state, initiatives, selected: state.selected === action.value ? null : state.selected };
+            const selected = state.selected === action.value ? null : state.selected
+            const firstTurn = initiatives[0].id;
+            return { ...state,
+                initiatives,
+                selected,
+                firstTurn
+            };
         }
         case WRITE_INPUT_INITIATIVE: {
             const inputInitiative = parseInt(state.inputInitiative + action.value);
@@ -84,15 +102,29 @@ export const reducer = (state, action) => {
             return { ...state, inputInitiative: -state.inputInitiative };
         }
         case NEXT: {
+            const { firstTurn } = state;
+            let time = state.time;
+            let rounds = state.rounds;
+
+            const initiatives = state.initiatives.slice(1).concat(state.initiatives.slice(0, 1));
+
+            if (firstTurn === initiatives[0].id) {
+                rounds += 1;
+                time += 6;
+            }
+
             return {
                 ...state,
-                initiatives: state.initiatives.slice(1).concat(state.initiatives.slice(0, 1))
+                initiatives,
+                time,
+                rounds
             };
         }
         case BACK: {
+            const initiatives = state.initiatives.slice(-1).concat(state.initiatives.slice(0, -1));
             return {
                 ...state,
-                initiatives: state.initiatives.slice(-1).concat(state.initiatives.slice(0, -1))
+                initiatives
             };
         }
         case SELECT: {

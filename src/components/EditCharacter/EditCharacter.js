@@ -77,7 +77,7 @@ function KeyboardHitpoints({ isNegative }) {
     )
 }
 
-export default function HitPointsConditionsManager() {
+export default function EditCharacter() {
     const [{ initiatives, selected }] = useStateValue();
     const [checked, onChange] = useState(true);
     const { conditions, name } = initiatives?.find(ini => ini.id === selected) ?? {};

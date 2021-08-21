@@ -1,7 +1,9 @@
-import { useStateValue } from '../../state-manager/context';
-import { Button, Row, Col, Statistic } from 'antd';
+import { Button, Row, Col, Typography } from 'antd';
 
-import { WRITE_INPUT_NAME } from '../../state-manager/actions';
+import { useStateValue } from '../../../../state-manager/context';
+import { WRITE_INPUT_NAME } from '../../../../state-manager/actions';
+
+const { Title } = Typography;
 
 const buttonLetters = [
     { value: "q", type: WRITE_INPUT_NAME },
@@ -32,7 +34,7 @@ const buttonLetters = [
     { value: "n", type: WRITE_INPUT_NAME },
     { value: "m", type: WRITE_INPUT_NAME },
     { value: "_", type: WRITE_INPUT_NAME },
-    { value: "??", type: WRITE_INPUT_NAME },
+    { value: "?", type: WRITE_INPUT_NAME },
     { value: "1", type: WRITE_INPUT_NAME },
     { value: "2", type: WRITE_INPUT_NAME },
     { value: "3", type: WRITE_INPUT_NAME },
@@ -54,6 +56,7 @@ function Keyboard({ extraWords }) {
                     <Col key={value}>
                         <Button
                             size="large"
+                            title={value ?? undefined}
                             style={{ minWidth: '70px', height: '100%' }}
                             type="primary" onClick={() => dispatch({ type, value })} >
                             {!!value ? value : <Icon />}
@@ -73,19 +76,18 @@ const Name = () => {
     const players_param = urlParams.get('players') ? urlParams.get('players') : null;
     const players = players_param?.split("-")?.map(ply => ({ value: ply, type: WRITE_INPUT_NAME })) ?? [];
 
-    return <>
-        <Row gutter={[16, 16]} justify="center">
-            <Col>
-                <Statistic
-                    style={{ margin: 10 }}
-                    value={"Name: " + inputName}
-                />
-            </Col>
-        </Row>
-        <Row gutter={[8, 8]}>
-            <Keyboard extraWords={players} />
-        </Row>
-    </>
+    return (
+        <>
+            <Row gutter={[16, 16]} justify="center">
+                <Col>
+                    <Title style={{ margin: 10 }} level={3}>Name: {inputName}</Title>
+                </Col>
+            </Row>
+            <Row gutter={[8, 8]}>
+                <Keyboard extraWords={players} />
+            </Row>
+        </>
+    );
 };
 
 export default Name;

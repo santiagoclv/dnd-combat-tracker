@@ -13,10 +13,10 @@ describe('App', () => {
         const noDataMessage = screen.getByText(/No Data/i);
         expect(noDataMessage).toBeInTheDocument();
 
-        const nextChatacterBtn = screen.getByRole('button', { name: /next character/i });
+        const nextChatacterBtn = screen.getByTitle('Next turn');
         expect(nextChatacterBtn).toBeDisabled();
 
-        const goBackBtn = screen.getByRole('button', { name: /go back/i });
+        const goBackBtn = screen.getByTitle('Previous turn');
         expect(goBackBtn).toBeDisabled();
     });
 
@@ -29,14 +29,14 @@ describe('App', () => {
         // character name
         fireEvent.click(screen.getByRole('button', { name: "a" }));
         fireEvent.click(screen.getByRole('button', { name: "b" }));
-        fireEvent.click(screen.getByRole('button', { name: "Next" }));
+        fireEvent.click(screen.getByTitle('Next Character Options'));
         // character initiative
         fireEvent.click(screen.getByRole('button', { name: "2" }));
-        fireEvent.click(screen.getByRole('button', { name: "Next" }));
+        fireEvent.click(screen.getByTitle('Next Character Options'));
         // hp initiative
         fireEvent.click(screen.getByRole('button', { name: "2" }));
         fireEvent.click(screen.getByRole('button', { name: "4" }));
-        fireEvent.click(screen.getByRole('button', { name: "Create as a Player" }));
+        fireEvent.click(screen.getByTitle('Add character as a Player'));
         
         await waitFor(() => {
             const name = screen.getByRole('cell', { name: "ab" });

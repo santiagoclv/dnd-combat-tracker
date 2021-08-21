@@ -1,9 +1,9 @@
-import React from 'react';
+import { Button, Row, Col, Typography } from 'antd';
 
-import { Button, Row, Col, Statistic } from 'antd';
+import { useStateValue } from '../../../../state-manager/context';
+import { WRITE_INPUT_HP } from '../../../../state-manager/actions';
 
-import { useStateValue } from '../../state-manager/context';
-import { WRITE_INPUT_HP } from '../../state-manager/actions';
+const { Title } = Typography;
 
 const buttons = [
     { value: "1", type: WRITE_INPUT_HP },
@@ -31,6 +31,7 @@ function Keyboard() {
                         <Button
                             danger={danger}
                             size="large"
+                            title={value ?? undefined}
                             style={{ minWidth: '70px', height: '100%' }}
                             type="primary" onClick={() => dispatch({ type, value })} >
                             {!!value ? value : <Icon />}
@@ -44,18 +45,16 @@ function Keyboard() {
 
 export default function HitPoints() {
     const [{ inputHitpoints }] = useStateValue();
-    return <>
-        <Row gutter={[16, 16]} justify="center">
-            <Col span={8} >
-                <Statistic
-                    style={{ margin: 10 }}
-                    value={"HP: " + inputHitpoints}
-                    precision={0}
-                />
-            </Col>
-        </Row>
-        <Row gutter={[8, 8]}>
-            <Keyboard />
-        </Row>
-    </>
+    return (
+        <>
+            <Row gutter={[16, 16]} justify="center">
+                <Col span={8} >
+                    <Title style={{ margin: 10 }} level={3}>HP: {inputHitpoints}</Title>
+                </Col>
+            </Row>
+            <Row gutter={[8, 8]}>
+                <Keyboard />
+            </Row>
+        </>
+    );
 }
