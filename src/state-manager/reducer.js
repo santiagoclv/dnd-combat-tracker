@@ -1,5 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep';
 
+import { saveCharacter } from '../components/ManageCharacters/storage-data';
+
 import {
     ADD_INITIATIVE,
     DELETE_ALL,
@@ -38,16 +40,20 @@ export const initialState = {
 export const reducer = (state, action) => {
     switch (action.type) {
         case ADD_INITIATIVE: {
+            const { monster, hitpoints, name, initiative } = action.value;
             const character = {
-                value: state.inputInitiative ?? 0,
-                name: state.inputName ?? '',
-                hitpoints: state.inputHitpoints,
+                initiative: initiative ?? 0,
+                name: name ?? '',
+                hitpoints: hitpoints ?? 0,
                 id: Date.now(),
-                monster: action.value,
+                monster,
                 conditions: []
             };
-            const initiatives = [...state.initiatives, character].sort((a, b) => b.value - a.value);
+            const initiatives = [...state.initiatives, character].sort((a, b) => b.initiative - a.initiative);
             const firstTurn = initiatives[0].id;
+
+            saveCharacter(character);
+
             return { 
                 ...state,
                 firstTurn,

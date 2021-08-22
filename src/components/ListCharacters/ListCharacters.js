@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import { Table, Tag, Modal, Row, Col, Button, Typography } from 'antd';
 import { sortableContainer, sortableElement, sortableHandle, arrayMove } from 'react-sortable-hoc';
 import { DeleteOutlined, MenuOutlined } from '@ant-design/icons';
@@ -43,18 +43,18 @@ const ListCharacters = ({ wider }) => {
             },
             {
                 title: 'Init',
-                key: 'value',
-                dataIndex: 'value',
-            }
-        ];
-
-        if(wider){
-            fields.push({
+                key: 'initiative',
+                dataIndex: 'initiative',
+            },
+            {
                 title: 'HP',
                 render: ({hitpoints, monster}) => (
                     <span style={{ fontWeight: 500 , color: hitpoints > 0 || !monster ? 'green' : 'red'}}>{hitpoints}</span>
                 )
-            });
+            }
+        ];
+
+        if(wider){
             fields.push({
                 title: 'Conditions',
                 dataIndex: 'conditions',
@@ -134,8 +134,8 @@ const ListCharacters = ({ wider }) => {
                     },
                 }}
             />
-            <Row style={{ height: '40px' }} >
-                <Col span={6}>
+            <Row style={{ height: '40px', display: 'flex', justifyContent: 'space-between' }} >
+                <Col>
                     <Button
                         size="large"
                         style={{ maxWidth: '150px', height: '100%' }}
@@ -146,13 +146,13 @@ const ListCharacters = ({ wider }) => {
                         Back
                      </Button>
                 </Col>
-                <Col span={6}>
+                <Col>
                     <Text keyboard>Rounds: {rounds}</Text>
                 </Col>
-                <Col span={6}>
+                <Col>
                     <Text keyboard>Time: {getTime(time)}</Text>
                 </Col>
-                <Col span={6} style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                <Col>
                     <Button
                         size="large"
                         style={{ maxWidth: '150px', height: '100%' }}

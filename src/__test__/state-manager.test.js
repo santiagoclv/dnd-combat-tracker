@@ -27,9 +27,9 @@ import { ContextWrapper, useStateValue } from '../state-manager/context';
 const storeState = {
     firstTurn: 1629556900206,
     initiatives: [
-        { value: 66, name: "zz", hitpoints: 0, id: 1629556900206, monster: true, conditions: [] },
-        { value: 6, name: "ii", hitpoints: 0, id: 1629556872380, monster: false, conditions: [] },
-        { value: 6, name: "ii", hitpoints: 0, id: 1629556876214, monster: false, conditions: [] }
+        { initiative: 66, name: "zz", hitpoints: 0, id: 1629556900206, monster: true, conditions: [] },
+        { initiative: 6, name: "ii", hitpoints: 0, id: 1629556872380, monster: false, conditions: [] },
+        { initiative: 6, name: "ii", hitpoints: 0, id: 1629556876214, monster: false, conditions: [] }
     ],
     inputHitpoints: 0,
     inputInitiative: 0,
@@ -90,7 +90,7 @@ describe('State Manager', () => {
 
             act(() => {
                 const [, dispatch] = result.current;
-                dispatch({ type: ADD_INITIATIVE, value: true });
+                dispatch({ type: ADD_INITIATIVE, value: { monster : true } });
             });
 
             const [state] = result.current;
@@ -106,14 +106,14 @@ describe('State Manager', () => {
 
             act(() => {
                 const [, dispatch] = result.current;
-                dispatch({ type: ADD_INITIATIVE, value: true });
+                dispatch({ type: ADD_INITIATIVE, value: { monster : true } });
             });
 
             const [{ initiatives, firstTurn }] = result.current;
             expect(initiatives).toHaveLength(1);
             expect(initiatives).toEqual([
                 {
-                    value: 0,
+                    initiative: 0,
                     name: '',
                     id: 1234,
                     hitpoints: 0,
@@ -131,7 +131,7 @@ describe('State Manager', () => {
 
             act(() => {
                 const [, dispatch] = result.current;
-                dispatch({ type: ADD_INITIATIVE, value: true });
+                dispatch({ type: ADD_INITIATIVE, value: { monster : true } });
                 dispatch({ type: DELETE_ALL });
             });
 

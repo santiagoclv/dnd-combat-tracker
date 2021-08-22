@@ -5,8 +5,9 @@ import 'antd/dist/antd.css';
 
 import ListCharacters from './components/ListCharacters/ListCharacters';
 import AddCharacter from './components/AddCharacter/AddCharacter';
-import Settings from './components/Settings/Settings';
 import EditCharacter from './components/EditCharacter/EditCharacter';
+import ManageScenes from './components/ManageScenes/ManageScenes';
+import ManageCharacters from './components/ManageCharacters/ManageCharacters';
 import { useStateValue, ContextWrapper } from './state-manager/context';
 
 import './App.css';
@@ -23,12 +24,14 @@ const App = () => {
         }
     }, [selected]);
 
+    const shrinkList = activeTab !== "1";
+
     return (
         <Row style={{ width: "100%", height: "100%" }}>
-            <Col span={activeTab === "2" ? 8 : 14} >
-                <ListCharacters wider={activeTab === "1"} />
+            <Col span={shrinkList ? 8 : 14} >
+                <ListCharacters wider={!shrinkList} />
             </Col>
-            <Col span={activeTab === "2" ? 16 : 10} >
+            <Col span={shrinkList ? 16 : 10} >
                 <Tabs style={{padding: 8}}  onChange={setTab} activeKey={activeTab}>
                     <TabPane tab="Add Character" key="2">
                         <AddCharacter />
@@ -36,8 +39,11 @@ const App = () => {
                     <TabPane disabled={!selected} tab="Edit Character" key="1">
                         <EditCharacter />
                     </TabPane>
-                    <TabPane tab={<> <SettingOutlined /> Settings</>} key="3">
-                        <Settings />
+                    <TabPane tab={<><SettingOutlined /> Scenes</>} key="3">
+                        <ManageScenes />
+                    </TabPane>
+                    <TabPane tab={<><SettingOutlined /> Characters</>} key="4">
+                        <ManageCharacters />
                     </TabPane>
                 </Tabs>
             </Col>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Row, Col, Checkbox, Tag } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 

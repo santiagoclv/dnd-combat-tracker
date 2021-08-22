@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Button, Steps } from 'antd';
 import { DeleteOutlined, RollbackOutlined } from '@ant-design/icons';
 
@@ -29,8 +29,24 @@ const steps = [
 ];
 
 export default function AddCharacter() {
-    const [, dispatch] = useStateValue();
+    const [{
+        inputHitpoints: hitpoints,
+        inputName: name,
+        inputInitiative: initiative
+    }, dispatch] = useStateValue();
     const [current, setCurrent] = useState(0);
+
+    const handleClickAdd = useCallback(
+        (monster) => {
+            setCurrent(0);
+            dispatch({ 
+                type: ADD_INITIATIVE,
+                value: { monster, hitpoints, name, initiative }
+            });
+        },
+        [hitpoints, name, initiative, dispatch, setCurrent],
+    );
+
     return (
         <>
             <Steps current={current}>
@@ -95,7 +111,7 @@ export default function AddCharacter() {
                         type="primary"
                         title="Add character as a Monster/NPC"
                         danger
-                        onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, value: true }) }}>
+                        onClick={() => handleClickAdd(true)}>
                         Add as a Monster
                     </Button>
                 )}
@@ -103,7 +119,7 @@ export default function AddCharacter() {
                     <Button
                         type="primary"
                         title="Add character as a Player"
-                        onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, value: false }) }}>
+                        onClick={() => handleClickAdd(false)}>
                         Add as a Player
                     </Button>
                 )}
