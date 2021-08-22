@@ -1,6 +1,6 @@
 # [Combat Tracker](https://santiagoclv.github.io/combat-tracker) for TTRPG
 
-The main goal on the design of this app was: I don't want to use the jeywoard of my tablet.
+The main goal on the design of this app was: I don't want to use the keyboard of my tablet.
 
 ## Fetures
 
