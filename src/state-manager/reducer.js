@@ -43,7 +43,7 @@ export const reducer = (state, action) => {
                 name: state.inputName ?? '',
                 hitpoints: state.inputHitpoints,
                 id: Date.now(),
-                monster: action.monster,
+                monster: action.value,
                 conditions: []
             };
             const initiatives = [...state.initiatives, character].sort((a, b) => b.value - a.value);
@@ -64,14 +64,15 @@ export const reducer = (state, action) => {
             return action.value;
         }
         case SET_INITIATIVES: {
-            const firstTurn = action.initiatives[0].id;
-            return { ...state, initiatives: action.initiatives, firstTurn };
+            const firstTurn = action.value[0].id;
+            return { ...state, initiatives: action.value, firstTurn };
         }
         case REMOVE_CHARACTER: {
             const initiatives = state.initiatives.filter(({ id }) => id !== action.value);
             const selected = state.selected === action.value ? null : state.selected
-            const firstTurn = initiatives[0].id;
-            return { ...state,
+            const firstTurn = initiatives[0]?.id ?? null;
+            return {
+                ...state,
                 initiatives,
                 selected,
                 firstTurn

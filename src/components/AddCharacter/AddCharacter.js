@@ -95,7 +95,7 @@ export default function AddCharacter() {
                         type="primary"
                         title="Add character as a Monster/NPC"
                         danger
-                        onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, monster: true }) }}>
+                        onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, value: true }) }}>
                         Add as a Monster
                     </Button>
                 )}
@@ -103,7 +103,7 @@ export default function AddCharacter() {
                     <Button
                         type="primary"
                         title="Add character as a Player"
-                        onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, monster: false }) }}>
+                        onClick={() => { setCurrent(0); dispatch({ type: ADD_INITIATIVE, value: false }) }}>
                         Add as a Player
                     </Button>
                 )}

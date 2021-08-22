@@ -3,25 +3,41 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import {
     ADD_INITIATIVE,
     DELETE_ALL,
-    // LOAD_STATE,
-    // SET_INITIATIVES,
-    // REMOVE_CHARACTER,
-    // WRITE_INPUT_INITIATIVE,
-    // WRITE_INPUT_NAME,
-    // WRITE_INPUT_HP,
-    // DELETE_INPUT_INITIATIVE,
-    // DELETE_INPUT_NAME,
-    // DELETE_INPUT_HP,
-    // NEGATIVE_INPUT_INITIATIVE,
-    // NEXT,
-    // BACK,
-    // SELECT,
-    // EDIT_HP,
-    // EDIT_CONDITION,
-    // REMOVE_CONDITION
+    NEXT,
+    BACK,
+    REMOVE_CHARACTER,
+    LOAD_STATE,
+    SET_INITIATIVES,
+    WRITE_INPUT_INITIATIVE,
+    WRITE_INPUT_NAME,
+    WRITE_INPUT_HP,
+    DELETE_INPUT_INITIATIVE,
+    DELETE_INPUT_NAME,
+    DELETE_INPUT_HP,
+    NEGATIVE_INPUT_INITIATIVE,
+    SELECT,
+    EDIT_HP,
+    EDIT_CONDITION,
+    REMOVE_CONDITION,
 } from '../state-manager/actions';
+
 import { init, initialState, STORED_STATE } from '../state-manager/reducer';
 import { ContextWrapper, useStateValue } from '../state-manager/context';
+
+const storeState = {
+    firstTurn: 1629556900206,
+    initiatives: [
+        { value: 66, name: "zz", hitpoints: 0, id: 1629556900206, monster: true, conditions: [] },
+        { value: 6, name: "ii", hitpoints: 0, id: 1629556872380, monster: false, conditions: [] },
+        { value: 6, name: "ii", hitpoints: 0, id: 1629556876214, monster: false, conditions: [] }
+    ],
+    inputHitpoints: 0,
+    inputInitiative: 0,
+    inputName: "",
+    rounds: 22,
+    selected: null,
+    time: 132
+};
 
 describe('State Manager', () => {
     describe('init function', () => {
@@ -74,7 +90,7 @@ describe('State Manager', () => {
 
             act(() => {
                 const [, dispatch] = result.current;
-                dispatch({ type: ADD_INITIATIVE, monster: true });
+                dispatch({ type: ADD_INITIATIVE, value: true });
             });
 
             const [state] = result.current;
@@ -90,10 +106,10 @@ describe('State Manager', () => {
 
             act(() => {
                 const [, dispatch] = result.current;
-                dispatch({ type: ADD_INITIATIVE, monster: true });
+                dispatch({ type: ADD_INITIATIVE, value: true });
             });
 
-            const [{ initiatives }] = result.current;
+            const [{ initiatives, firstTurn }] = result.current;
             expect(initiatives).toHaveLength(1);
             expect(initiatives).toEqual([
                 {
@@ -105,6 +121,7 @@ describe('State Manager', () => {
                     conditions: []
                 }
             ]);
+            expect(firstTurn).toEqual(initiatives[0].id);
         });
 
         test('should process correctly DELETE_ALL', () => {
@@ -114,13 +131,277 @@ describe('State Manager', () => {
 
             act(() => {
                 const [, dispatch] = result.current;
-                dispatch({ type: ADD_INITIATIVE, monster: true });
+                dispatch({ type: ADD_INITIATIVE, value: true });
                 dispatch({ type: DELETE_ALL });
-                
             });
 
             const [state] = result.current;
             expect(state).toBe(initialState);
+        });
+
+        test('should process correctly NEXT', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.initiatives[0]).toEqual(storeState.initiatives[0]);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: NEXT });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.initiatives[0]).toEqual(storeState.initiatives[1]);
+        });
+
+        test('should process correctly BACK', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.initiatives[0]).toEqual(storeState.initiatives[0]);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: BACK });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.initiatives[0]).toEqual(storeState.initiatives[2]);
+        });
+
+        test('should process correctly REMOVE_CHARACTER', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.firstTurn).toEqual(storeState.firstTurn);
+            expect(preState.initiatives[0]).toEqual(storeState.initiatives[0]);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: REMOVE_CHARACTER, value: preState.firstTurn });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.firstTurn).toEqual(storeState.initiatives[1].id);
+            expect(newState.initiatives[0]).toEqual(storeState.initiatives[1]);
+        });
+
+        test('should process correctly Round and Time Count', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.rounds).toEqual(storeState.rounds);
+            expect(preState.time).toEqual(storeState.time);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: NEXT });
+                dispatch({ type: NEXT });
+                dispatch({ type: NEXT });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.time).toEqual(storeState.time + 6);
+            expect(newState.rounds).toEqual(storeState.rounds + 1);
+        });
+
+        test('should process correctly LOAD_STATE', () => {
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState).toEqual(initialState);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: LOAD_STATE, value: storeState });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState).toEqual(storeState);
+        });
+
+        test('should process correctly SET_INITIATIVES', () => {
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState).toEqual(initialState);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: SET_INITIATIVES, value: storeState.initiatives });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.initiatives).toEqual(storeState.initiatives);
+            expect(newState.firstTurn).toEqual(storeState.firstTurn);
+        });
+
+        test('should process correctly WRITE_INPUT_INITIATIVE, DELETE_INPUT_INITIATIVE and NEGATIVE_INPUT_INITIATIVE', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.inputInitiative).toEqual(0);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: WRITE_INPUT_INITIATIVE, value: "1" });
+                dispatch({ type: WRITE_INPUT_INITIATIVE, value: "5" });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.inputInitiative).toEqual(15);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: NEGATIVE_INPUT_INITIATIVE });
+            });
+
+            const [ nextState ] = result.current;
+
+            expect(nextState.inputInitiative).toEqual(-15);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: DELETE_INPUT_INITIATIVE });
+            });
+
+            const [ lastState ] = result.current;
+
+            expect(lastState.inputInitiative).toEqual(0);
+        });
+
+        test('should process correctly WRITE_INPUT_NAME and DELETE_INPUT_NAME', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.inputName).toEqual('');
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: WRITE_INPUT_NAME, value: "a" });
+                dispatch({ type: WRITE_INPUT_NAME, value: "b" });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.inputName).toEqual("ab");
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: DELETE_INPUT_NAME });
+            });
+
+            const [ nextState ] = result.current;
+
+            expect(nextState.inputName).toEqual("a");
+        });
+
+        test('should process correctly WRITE_INPUT_HP and DELETE_INPUT_HP', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.inputHitpoints).toEqual(0);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: WRITE_INPUT_HP, value: "1" });
+                dispatch({ type: WRITE_INPUT_HP, value: "4" });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.inputHitpoints).toEqual(14);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: DELETE_INPUT_HP });
+            });
+
+            const [ nextState ] = result.current;
+
+            expect(nextState.inputHitpoints).toEqual(0);
+        });
+
+        test('should process correctly SELECT, EDIT_HP, EDIT_CONDITION AND REMOVE_CONDITION,', () => {
+            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
+            const { result } = renderHook(() => useStateValue(), {
+                wrapper: ContextWrapper
+            });
+
+            const [ preState ] = result.current;
+
+            expect(preState.selected).toEqual(null);
+            expect(preState.inputInitiative).toEqual(0);
+            expect(preState.inputName).toEqual('');
+            expect(preState.inputHitpoints).toEqual(0);
+            expect(preState.initiatives[0]).toEqual(storeState.initiatives[0]);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: SELECT, value: storeState.initiatives[0].id });
+                dispatch({ type: EDIT_HP, value: -1 });
+                dispatch({ type: EDIT_CONDITION, value: {color: "gold", condition: "Unconscious"} });
+            });
+
+            const [ newState ] = result.current;
+
+            expect(newState.selected).toEqual(storeState.initiatives[0].id);
+            expect(newState.inputInitiative).toEqual(storeState.initiatives[0].value);
+            expect(newState.inputName).toEqual(storeState.initiatives[0].name);
+            expect(newState.inputHitpoints).toEqual(storeState.initiatives[0].hitpoints);
+
+            expect(newState.initiatives[0].hitpoints).toEqual(storeState.initiatives[0].hitpoints - 1);
+            expect(newState.initiatives[0].conditions).toEqual([{color: "gold", condition: "Unconscious"}]);
+
+            act(() => {
+                const [, dispatch] = result.current;
+                dispatch({ type: REMOVE_CONDITION, value: {color: "gold", condition: "Unconscious"} });
+            });
+
+            const [ lastState ] = result.current;
+
+            expect(lastState.initiatives[0].conditions).toEqual([]);
         });
     });
 });

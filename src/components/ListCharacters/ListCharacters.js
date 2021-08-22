@@ -90,7 +90,7 @@ const ListCharacters = ({ wider }) => {
     const onSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex !== newIndex) {
             const newInitiatives = arrayMove([].concat(initiatives), oldIndex, newIndex).filter(el => !!el);
-            dispatch({ type: SET_INITIATIVES, initiatives: newInitiatives });
+            dispatch({ type: SET_INITIATIVES, value: newInitiatives });
         }
     };
 

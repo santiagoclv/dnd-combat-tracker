@@ -7,14 +7,16 @@ import { DELETE_ALL, LOAD_STATE } from '../../state-manager/actions';
 
 const { confirm } = Modal;
 
+const STATES = "STATES";
+
 const saveState = (states) => {
-    localStorage.setItem("states", JSON.stringify(states))
+    localStorage.setItem(STATES, JSON.stringify(states))
 }
 
 const getStates = () => {
     let states = []
     try {
-        const states_str = localStorage.getItem("states");
+        const states_str = localStorage.getItem(STATES);
         states = states_str ? JSON.parse(states_str) : [];
     } catch (error) {
         console.error("Error on getStates from settings", error);
