@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Tabs } from 'antd';
-import { SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined, RadarChartOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
+import Dices from './components/Dices/Dices';
 import ListCharacters from './components/ListCharacters/ListCharacters';
 import AddCharacter from './components/AddCharacter/AddCharacter';
 import EditCharacter from './components/EditCharacter/EditCharacter';
@@ -44,6 +45,9 @@ const App = () => {
                     </TabPane>
                     <TabPane tab={<><SettingOutlined /> Characters</>} key="4">
                         <ManageCharacters />
+                    </TabPane>
+                    <TabPane tab={<><RadarChartOutlined /> Dices</>} key="5">
+                        <Dices />
                     </TabPane>
                 </Tabs>
             </Col>

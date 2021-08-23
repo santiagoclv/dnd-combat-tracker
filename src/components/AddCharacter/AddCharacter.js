@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Button, Steps } from 'antd';
+import { Button, Steps, Card, Row, Col } from 'antd';
 import { DeleteOutlined, RollbackOutlined } from '@ant-design/icons';
 
 import Initiative from './components/Initiative/Initiative';
@@ -39,7 +39,7 @@ export default function AddCharacter() {
     const handleClickAdd = useCallback(
         (monster) => {
             setCurrent(0);
-            dispatch({ 
+            dispatch({
                 type: ADD_INITIATIVE,
                 value: { monster, hitpoints, name, initiative }
             });
@@ -124,6 +124,31 @@ export default function AddCharacter() {
                     </Button>
                 )}
             </div>
+            {/* <div className="site-card-wrapper" style={{ overflowY: 'scroll', height: 288 }}>
+                <Row gutter={16}>
+                    <Col span={6}>
+                        <Card
+                            size="small"
+                            actions={[
+                                <DeleteOutlined key="setting" />,
+                                <DeleteOutlined key="edit" />,
+                                <DeleteOutlined key="ellipsis" />,
+                            ]}
+                        >
+                            <Card.Meta
+                                title={name}
+                                description={
+                                    <>
+                                        <div>Initiative: {initiative}</div>
+                                        <div>HP: {hitpoints}</div>
+                                    </>
+                                }
+                            />
+                        </Card>
+                        
+                    </Col>
+                </Row>
+            </div> */}
         </>
     )
 }

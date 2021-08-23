@@ -1,7 +1,7 @@
 {
   "name": "combat-tracker",
   "homepage": "https://santiagoclv.github.io/combat-tracker",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": false,
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
