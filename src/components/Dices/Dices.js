@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Button, Row, Col, Typography } from 'antd';
 import Icon, { RollbackOutlined } from '@ant-design/icons';
 
-import { ReactComponent as D4 } from './assets/d4.svg';
-import { ReactComponent as D6 } from './assets/d6.svg';
-import { ReactComponent as D8 } from './assets/d8.svg';
-import { ReactComponent as D10 } from './assets/d10.svg';
-import { ReactComponent as D12 } from './assets/d12.svg';
-import { ReactComponent as D20 } from './assets/d20.svg';
+import { ReactComponent as D4 } from '../../assets/d4.svg';
+import { ReactComponent as D6 } from '../../assets/d6.svg';
+import { ReactComponent as D8 } from '../../assets/d8.svg';
+import { ReactComponent as D10 } from '../../assets/d10.svg';
+import { ReactComponent as D12 } from '../../assets/d12.svg';
+import { ReactComponent as D20 } from '../../assets/d20.svg';
 
 const { Title } = Typography;
 

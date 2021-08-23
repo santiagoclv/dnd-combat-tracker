@@ -1,11 +1,13 @@
 import { useState, useCallback } from 'react';
 import { Button, Steps, Card, Row, Col } from 'antd';
-import { DeleteOutlined, RollbackOutlined } from '@ant-design/icons';
+import Icon, { DeleteOutlined, RollbackOutlined, EditOutlined } from '@ant-design/icons';
 
 import Initiative from './components/Initiative/Initiative';
 import HitPoints from './components/HitPoints/HitPoints';
 import Name from './components/Name/Name';
 
+import { ReactComponent as DragonHead } from '../../assets/dragon-head.svg';
+import { ReactComponent as HelmHead } from '../../assets/visored-helm.svg';
 import { useStateValue } from '../../state-manager/context';
 import {
     ADD_INITIATIVE,
@@ -13,6 +15,10 @@ import {
     DELETE_INPUT_INITIATIVE,
     DELETE_INPUT_NAME
 } from '../../state-manager/actions';
+
+
+const DragonHeadIcon = props => <Icon component={DragonHead} {...props} style={{ fontSize: '20px' }} />;
+const HelmHeadIcon = props => <Icon component={HelmHead} {...props} style={{ fontSize: '20px' }} />;
 
 const { Step } = Steps;
 
@@ -124,15 +130,14 @@ export default function AddCharacter() {
                     </Button>
                 )}
             </div>
-            {/* <div className="site-card-wrapper" style={{ overflowY: 'scroll', height: 288 }}>
+            <div className="site-card-wrapper" style={{ height: 'auto', overflowY: 'scroll', overflowX: 'hidden' }}>
                 <Row gutter={16}>
                     <Col span={6}>
                         <Card
                             size="small"
                             actions={[
-                                <DeleteOutlined key="setting" />,
-                                <DeleteOutlined key="edit" />,
-                                <DeleteOutlined key="ellipsis" />,
+                                <EditOutlined key="load" />,
+                                true ? <DragonHeadIcon key="monster" />: <HelmHeadIcon key="player" />
                             ]}
                         >
                             <Card.Meta
@@ -148,7 +153,7 @@ export default function AddCharacter() {
                         
                     </Col>
                 </Row>
-            </div> */}
+            </div>
         </>
     )
 }
