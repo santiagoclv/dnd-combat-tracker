@@ -37,7 +37,14 @@ export default function SuggestedCharacters() {
 
     return (
         <List
-            style={{ margin: '0.5rem'}}
+            style={{ 
+                margin: '0.5rem',
+                height: '35vh',
+                overflowY: 'scroll',
+                overflowX: 'hidden',
+                border: 'solid 1px lightgrey',
+                borderTop: 'solid 2px lightgrey',
+            }}
             grid={{ gutter: 16, column: 5 }}
             dataSource={characters}
             renderItem={ ({name, initiative, hitpoints, monster }) => (

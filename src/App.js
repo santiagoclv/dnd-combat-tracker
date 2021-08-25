@@ -32,7 +32,13 @@ const App = () => {
             <Col span={shrinkList ? 8 : 14} >
                 <ListCharacters wider={!shrinkList} />
             </Col>
-            <Col span={shrinkList ? 16 : 10} >
+            <Col
+                span={shrinkList ? 16 : 10} 
+                style={{ 
+                    height: '100vh',
+                    overflowX: 'hidden',
+                }}
+            >
                 <Tabs style={{padding: 8}}  onChange={setTab} activeKey={activeTab}>
                     <TabPane tab="Add Character" key="2">
                         <AddCharacter />
