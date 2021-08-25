@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { Button, Row, Col, Modal, Input, Table } from 'antd';
 import { DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 
-import { useStateValue } from '../../state-manager/context';
-import { DELETE_ALL, LOAD_STATE } from '../../state-manager/actions';
-
-import { getStates, saveState } from './storage-data';
+import { useStateValueInitiatives as useStateValue } from '../../state-manager/context';
+import { DELETE_ALL, LOAD_STATE } from '../../state-manager/initiatives/actions';
+import { getStates, saveStates } from '../../state-manager/scenes/storage-data';
 
 const { confirm } = Modal;
 
@@ -56,7 +55,7 @@ export default function ManageScenes() {
                                     }
                                     states.push(stateToBeSaved);
                                     setName(null);
-                                    saveState(states);
+                                    saveStates(states);
                                     setTimeout(() => setStates(getStates()), 0);
                                 },
                             });
@@ -106,7 +105,7 @@ export default function ManageScenes() {
                                     icon: null,
                                     onOk() {
                                         const newStates = states?.filter(state => id !== state.id);
-                                        saveState(newStates);
+                                        saveStates(newStates);
                                         setTimeout(() => setStates(getStates()), 0);
                                     },
                                 });

@@ -1,24 +1,20 @@
 import { useState, useCallback } from 'react';
-import { Button, Steps, Card, Row, Col } from 'antd';
-import Icon, { DeleteOutlined, RollbackOutlined, EditOutlined } from '@ant-design/icons';
+import { Button, Steps } from 'antd';
+import { DeleteOutlined, RollbackOutlined } from '@ant-design/icons';
 
+import SuggestedCharacters from './components/SuggestedCharacters/SuggestedCharacters';
 import Initiative from './components/Initiative/Initiative';
 import HitPoints from './components/HitPoints/HitPoints';
 import Name from './components/Name/Name';
 
-import { ReactComponent as DragonHead } from '../../assets/dragon-head.svg';
-import { ReactComponent as HelmHead } from '../../assets/visored-helm.svg';
-import { useStateValue } from '../../state-manager/context';
+import { useStateValueCharacters, useStateValueInitiatives as useStateValue } from '../../state-manager/context';
 import {
     ADD_INITIATIVE,
     DELETE_INPUT_HP,
     DELETE_INPUT_INITIATIVE,
     DELETE_INPUT_NAME
-} from '../../state-manager/actions';
-
-
-const DragonHeadIcon = props => <Icon component={DragonHead} {...props} style={{ fontSize: '20px' }} />;
-const HelmHeadIcon = props => <Icon component={HelmHead} {...props} style={{ fontSize: '20px' }} />;
+} from '../../state-manager/initiatives/actions';
+import { ADD_CHARACTER } from '../../state-manager/characters/actions';
 
 const { Step } = Steps;
 
@@ -40,6 +36,7 @@ export default function AddCharacter() {
         inputName: name,
         inputInitiative: initiative
     }, dispatch] = useStateValue();
+    const [, dispatchCharacters ] = useStateValueCharacters();
     const [current, setCurrent] = useState(0);
 
     const handleClickAdd = useCallback(
@@ -49,8 +46,12 @@ export default function AddCharacter() {
                 type: ADD_INITIATIVE,
                 value: { monster, hitpoints, name, initiative }
             });
+            dispatchCharacters({
+                type: ADD_CHARACTER,
+                value: { monster, hitpoints, name, initiative }
+            });
         },
-        [hitpoints, name, initiative, dispatch, setCurrent],
+        [hitpoints, name, initiative, dispatch, setCurrent, dispatchCharacters],
     );
 
     return (
@@ -130,30 +131,7 @@ export default function AddCharacter() {
                     </Button>
                 )}
             </div>
-            <div className="site-card-wrapper" style={{ height: 'auto', overflowY: 'scroll', overflowX: 'hidden' }}>
-                <Row gutter={16}>
-                    <Col span={6}>
-                        <Card
-                            size="small"
-                            actions={[
-                                <EditOutlined key="load" />,
-                                true ? <DragonHeadIcon key="monster" />: <HelmHeadIcon key="player" />
-                            ]}
-                        >
-                            <Card.Meta
-                                title={name}
-                                description={
-                                    <>
-                                        <div>Initiative: {initiative}</div>
-                                        <div>HP: {hitpoints}</div>
-                                    </>
-                                }
-                            />
-                        </Card>
-                        
-                    </Col>
-                </Row>
-            </div>
+            <SuggestedCharacters />
         </>
     )
 }

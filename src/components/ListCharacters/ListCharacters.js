@@ -3,8 +3,8 @@ import { Table, Tag, Modal, Row, Col, Button, Typography } from 'antd';
 import { sortableContainer, sortableElement, sortableHandle, arrayMove } from 'react-sortable-hoc';
 import { DeleteOutlined, MenuOutlined } from '@ant-design/icons';
 
-import { useStateValue } from '../../state-manager/context';
-import { BACK, NEXT, REMOVE_CHARACTER, SELECT, SET_INITIATIVES } from '../../state-manager/actions';
+import { useStateValueInitiatives as useStateValue } from '../../state-manager/context';
+import { BACK, NEXT, REMOVE_CHARACTER, SELECT, SET_INITIATIVES } from '../../state-manager/initiatives/actions';
 
 const { Text } = Typography;
 const { confirm } = Modal;

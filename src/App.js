@@ -9,7 +9,7 @@ import AddCharacter from './components/AddCharacter/AddCharacter';
 import EditCharacter from './components/EditCharacter/EditCharacter';
 import ManageScenes from './components/ManageScenes/ManageScenes';
 import ManageCharacters from './components/ManageCharacters/ManageCharacters';
-import { useStateValue, ContextWrapper } from './state-manager/context';
+import { useStateValueInitiatives as useStateValue, ContextWrapper } from './state-manager/context';
 
 import './App.css';
 

@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { Button, Row, Col, Checkbox, Tag } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
-import { useStateValue } from '../../state-manager/context';
-import { EDIT_CONDITION, EDIT_HP, REMOVE_CONDITION } from '../../state-manager/actions';
+import { useStateValueInitiatives as useStateValue } from '../../state-manager/context';
+import { EDIT_CONDITION, EDIT_HP, REMOVE_CONDITION } from '../../state-manager/initiatives/actions';
 
 const buttonsHitpoints = [
     { value: 1, type: EDIT_HP },

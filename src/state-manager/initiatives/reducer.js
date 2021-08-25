@@ -1,13 +1,12 @@
 import cloneDeep from 'lodash/cloneDeep';
 
-import { saveCharacter } from '../components/ManageCharacters/storage-data';
-
 import {
     ADD_INITIATIVE,
     DELETE_ALL,
     LOAD_STATE,
     SET_INITIATIVES,
     REMOVE_CHARACTER,
+    WRITE_INPUT_ALL,
     WRITE_INPUT_INITIATIVE,
     WRITE_INPUT_NAME,
     WRITE_INPUT_HP,
@@ -23,8 +22,6 @@ import {
     REMOVE_CONDITION
 } from './actions';
 
-export const STORED_STATE = "storedState";
-
 export const initialState = {
     initiatives: [],
     selected: null,
@@ -35,7 +32,6 @@ export const initialState = {
     rounds: 0,
     firstTurn: null,
 };
-
 
 export const reducer = (state, action) => {
     switch (action.type) {
@@ -51,8 +47,6 @@ export const reducer = (state, action) => {
             };
             const initiatives = [...state.initiatives, character].sort((a, b) => b.initiative - a.initiative);
             const firstTurn = initiatives[0].id;
-
-            saveCharacter(character);
 
             return { 
                 ...state,
@@ -82,6 +76,15 @@ export const reducer = (state, action) => {
                 initiatives,
                 selected,
                 firstTurn
+            };
+        }
+        case WRITE_INPUT_ALL: {
+            const { name, initiative, hitpoints } = action.value;
+            return { 
+                ...state,
+                inputName: name,
+                inputHitpoints: hitpoints,
+                inputInitiative: initiative
             };
         }
         case WRITE_INPUT_INITIATIVE: {
@@ -180,17 +183,4 @@ export const reducer = (state, action) => {
         default:
             throw new Error(`Unknow action ${action.type}`);
     }
-};
-
-export const init = () => {
-    let state = initialState;
-    try {
-        const string_state = localStorage.getItem(STORED_STATE);
-        state = string_state ? JSON.parse(string_state) : initialState;
-        state.selected = null;
-    } catch (error) {
-        console.error("Error on init reducer", error);
-        state = initialState;
-    }
-    return state;
 };

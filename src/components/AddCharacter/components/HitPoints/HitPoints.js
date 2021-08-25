@@ -1,7 +1,7 @@
 import { Button, Row, Col, Typography } from 'antd';
 
-import { useStateValue } from '../../../../state-manager/context';
-import { WRITE_INPUT_HP } from '../../../../state-manager/actions';
+import { useStateValueInitiatives as useStateValue } from '../../../../state-manager/context';
+import { WRITE_INPUT_HP } from '../../../../state-manager/initiatives/actions';
 
 const { Title } = Typography;
 

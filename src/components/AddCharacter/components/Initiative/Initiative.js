@@ -1,11 +1,11 @@
 import { LineOutlined } from '@ant-design/icons';
 import { Button, Row, Col, Typography } from 'antd';
 
-import { useStateValue } from '../../../../state-manager/context';
+import { useStateValueInitiatives as useStateValue } from '../../../../state-manager/context';
 import {
     NEGATIVE_INPUT_INITIATIVE,
     WRITE_INPUT_INITIATIVE
-} from '../../../../state-manager/actions';
+} from '../../../../state-manager/initiatives/actions';
 
 const { Title } = Typography;
 

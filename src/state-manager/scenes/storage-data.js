@@ -1,6 +1,6 @@
 const STATES = "STATES";
 
-export const saveState = (states) => {
+export const saveStates = (states) => {
     localStorage.setItem(STATES, JSON.stringify(states));
 };
 

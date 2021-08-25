@@ -1,26 +1,40 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import isEqual from 'lodash/isEqual';
 
-import { reducer, initialState, init, STORED_STATE } from './reducer';
+import { 
+    reducer as initiativesReducer,
+    initialState as initiativesInitialState,
+} from './initiatives/reducer';
+import { saveState, getInitialState } from './initiatives/storage-data';
+
+import { 
+    reducer as charactersReducer,
+    initialState as charactersInitialState,
+} from './characters/reducer';
+import { saveCharacters, getInitialCharacters } from './characters/storage-data';
 
 const StateContext = createContext();
 
 export const ContextWrapper = ({ children }) => {
-    const store = useReducer(reducer, initialState, init);
+    const initiativesStore = useReducer(initiativesReducer, initiativesInitialState, getInitialState);
+    const charactersStore = useReducer(charactersReducer, charactersInitialState, getInitialCharacters);
 
     useEffect(() => {
-        // Persist state on local storage.
-        const [ state ] = store;
-        if(!isEqual(state, initialState)){
-            localStorage.setItem(STORED_STATE, JSON.stringify(state));
-        }
-    }, [store]);
+        const [ state ] = initiativesStore;
+        saveState(state);
+    }, [initiativesStore]);
+
+    useEffect(() => {
+        const [ state ] = charactersStore;
+        saveCharacters(state);
+    }, [charactersStore]);
 
     return (
-        <StateContext.Provider value={store}>
+        <StateContext.Provider value={[initiativesStore, charactersStore]}>
             { children }
         </StateContext.Provider>
     );
 };
 
-export const useStateValue = () => useContext(StateContext);
+export const useStateValueInitiatives = () => useContext(StateContext)[0];
+
+export const useStateValueCharacters = () => useContext(StateContext)[1];

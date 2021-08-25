@@ -19,10 +19,10 @@ import {
     EDIT_HP,
     EDIT_CONDITION,
     REMOVE_CONDITION,
-} from '../state-manager/actions';
+} from '../state-manager/initiatives/actions';
 
-import { init, initialState, STORED_STATE } from '../state-manager/reducer';
-import { ContextWrapper, useStateValue } from '../state-manager/context';
+import { init, initialState, STORED_STATE } from '../state-manager/initiatives/reducer';
+import { ContextWrapper, useStateValueInitiatives as useStateValue } from '../state-manager/context';
 
 const storeState = {
     firstTurn: 1629556900206,
