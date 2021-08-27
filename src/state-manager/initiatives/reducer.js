@@ -1,4 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep';
+import maxBy from 'lodash/maxBy';
 
 import {
     ADD_INITIATIVE,
@@ -43,12 +44,21 @@ export const reducer = (state, action) => {
                 hitpoints: hitpoints ?? 0,
                 id: Date.now(),
                 monster,
-                conditions: []
+                conditions: [],
+                counter: 0
             };
+
+            if(state.initiatives.find(({name: chName}) => chName === name)){
+                const chs = state.initiatives.filter(({name: chName}) => chName.search(name) >= 0);
+                const max = maxBy(chs, 'counter') ?? chs[0];
+                character.counter = (max.counter ?? 0) + 1;
+                character.name = character.name + `_${character.counter}`;
+            }
+
             const initiatives = [...state.initiatives, character].sort((a, b) => b.initiative - a.initiative);
             const firstTurn = initiatives[0].id;
 
-            return { 
+            return {
                 ...state,
                 firstTurn,
                 initiatives,
