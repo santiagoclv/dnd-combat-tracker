@@ -80,5 +80,10 @@ describe('Rolling dices', () => {
             const result = rollIt(['-', '1', '+','d20']);
             expect(result).toBe(20);
         });
+
+        test('should roll a const 18 and return 18', () => {
+            const result = rollIt(['18']);
+            expect(result).toBe(18);
+        });
     });
 });
