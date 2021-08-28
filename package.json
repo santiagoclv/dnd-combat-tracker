@@ -1,6 +1,6 @@
 {
-  "name": "combat-tracker",
-  "homepage": "https://santiagoclv.github.io/combat-tracker",
+  "name": "dnd-combat-tracker",
+  "homepage": "https://santiagoclv.github.io/dnd-combat-tracker",
   "version": "3.0.1",
   "private": false,
   "dependencies": {
