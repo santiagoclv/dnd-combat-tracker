@@ -88,7 +88,7 @@ export default function AddCharacter() {
                         title="Delete initiative"
                         style={{ width: '100px' }}
                         type="primary" onClick={() => dispatch({ type: DELETE_INPUT_INITIATIVE })} >
-                        <DeleteOutlined />
+                        <RollbackOutlined />
                     </Button>
                 }
                 {

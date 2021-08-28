@@ -1,5 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
 import maxBy from 'lodash/maxBy';
+import { rollIt } from '../../helpers/rolling';
 
 import {
     ADD_INITIATIVE,
@@ -14,7 +15,6 @@ import {
     DELETE_INPUT_INITIATIVE,
     DELETE_INPUT_NAME,
     DELETE_INPUT_HP,
-    NEGATIVE_INPUT_INITIATIVE,
     NEXT,
     BACK,
     SELECT,
@@ -26,7 +26,7 @@ import {
 export const initialState = {
     initiatives: [],
     selected: null,
-    inputInitiative: 0,
+    inputInitiative: [],
     inputName: '',
     inputHitpoints: 0,
     time: 0,
@@ -39,7 +39,7 @@ export const reducer = (state, action) => {
         case ADD_INITIATIVE: {
             const { monster, hitpoints, name, initiative } = action.value;
             const character = {
-                initiative: initiative ?? 0,
+                initiative: rollIt(initiative ?? []),
                 name: name ?? '',
                 hitpoints: hitpoints ?? 0,
                 id: Date.now(),
@@ -48,8 +48,8 @@ export const reducer = (state, action) => {
                 counter: 0
             };
 
-            if(state.initiatives.find(({name: chName}) => chName === name)){
-                const chs = state.initiatives.filter(({name: chName}) => chName.search(name) >= 0);
+            if (state.initiatives.find(({ name: chName }) => chName === name)) {
+                const chs = state.initiatives.filter(({ name: chName }) => chName.search(name) >= 0);
                 const max = maxBy(chs, 'counter') ?? chs[0];
                 character.counter = (max.counter ?? 0) + 1;
                 character.name = character.name + `_${character.counter}`;
@@ -62,7 +62,7 @@ export const reducer = (state, action) => {
                 ...state,
                 firstTurn,
                 initiatives,
-                inputInitiative: 0,
+                inputInitiative: [],
                 inputName: '',
                 inputHitpoints: 0
             };
@@ -90,7 +90,7 @@ export const reducer = (state, action) => {
         }
         case WRITE_INPUT_ALL: {
             const { name, initiative, hitpoints } = action.value;
-            return { 
+            return {
                 ...state,
                 inputName: name,
                 inputHitpoints: hitpoints,
@@ -98,8 +98,25 @@ export const reducer = (state, action) => {
             };
         }
         case WRITE_INPUT_INITIATIVE: {
-            const inputInitiative = parseInt(state.inputInitiative + action.value);
-            return { ...state, inputInitiative };
+            const value = action.value;
+            const roll = state.inputInitiative ?? [];
+            const isNaNValue = isNaN(parseInt(value));
+            const lastValue = roll.length > 0 ? roll[roll.length - 1] : null;
+            const isLastNaN = isNaN(parseInt(lastValue));
+
+            if (isNaNValue || isLastNaN) {
+                let rollSplit = [...roll];
+                const isValueSing = ["-", "+"].includes(value);
+                const isLastValueSing = ["-", "+"].includes(lastValue);
+                if (!isValueSing && !isLastValueSing
+                    && isLastNaN && !!lastValue) {
+                    rollSplit.push('+');
+                }
+                rollSplit.push(value);
+                return { ...state, inputInitiative: rollSplit };
+            }
+
+            return { ...state, inputInitiative: [...roll?.slice(0, -1), lastValue + value] };
         }
         case WRITE_INPUT_NAME: {
             const inputName = state.inputName + action.value;
@@ -110,16 +127,13 @@ export const reducer = (state, action) => {
             return { ...state, inputHitpoints };
         }
         case DELETE_INPUT_INITIATIVE: {
-            return { ...state, inputInitiative: 0 };
+            return { ...state, inputInitiative: (state.inputInitiative ?? [])?.slice(0, -1) };
         }
         case DELETE_INPUT_HP: {
             return { ...state, inputHitpoints: 0 };
         }
         case DELETE_INPUT_NAME: {
             return { ...state, inputName: state?.inputName?.slice(0, -1) ?? '' };
-        }
-        case NEGATIVE_INPUT_INITIATIVE: {
-            return { ...state, inputInitiative: -state.inputInitiative };
         }
         case NEXT: {
             const { firstTurn } = state;
@@ -151,10 +165,7 @@ export const reducer = (state, action) => {
             const character = state.initiatives.find(({ id }) => id === action.value);
             return {
                 ...state,
-                selected: character.id,
-                inputInitiative: character?.value,
-                inputName: character?.name,
-                inputHitpoints: character?.hitpoints
+                selected: character.id
             };
         }
         case EDIT_HP: {

@@ -14,7 +14,6 @@ import {
     DELETE_INPUT_INITIATIVE,
     DELETE_INPUT_NAME,
     DELETE_INPUT_HP,
-    NEGATIVE_INPUT_INITIATIVE,
     SELECT,
     EDIT_HP,
     EDIT_CONDITION,
@@ -56,7 +55,7 @@ const storeState = {
         }
     ],
     "selected": null,
-    "inputInitiative": 0,
+    "inputInitiative": [],
     "inputName": "",
     "inputHitpoints": 0,
     "time": 0,
@@ -291,7 +290,7 @@ describe('State Manager', () => {
             expect(newState.firstTurn).toEqual(storeState.firstTurn);
         });
 
-        test('should process correctly WRITE_INPUT_INITIATIVE, DELETE_INPUT_INITIATIVE and NEGATIVE_INPUT_INITIATIVE', () => {
+        test('should process correctly WRITE_INPUT_INITIATIVE, DELETE_INPUT_INITIATIVE', () => {
             localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
             const { result } = renderHook(() => useStateValue(), {
                 wrapper: ContextWrapper
@@ -299,26 +298,16 @@ describe('State Manager', () => {
 
             const [ preState ] = result.current;
 
-            expect(preState.inputInitiative).toEqual(0);
+            expect(preState.inputInitiative).toEqual([]);
 
             act(() => {
                 const [, dispatch] = result.current;
-                dispatch({ type: WRITE_INPUT_INITIATIVE, value: "1" });
                 dispatch({ type: WRITE_INPUT_INITIATIVE, value: "5" });
             });
 
             const [ newState ] = result.current;
 
-            expect(newState.inputInitiative).toEqual(15);
-
-            act(() => {
-                const [, dispatch] = result.current;
-                dispatch({ type: NEGATIVE_INPUT_INITIATIVE });
-            });
-
-            const [ nextState ] = result.current;
-
-            expect(nextState.inputInitiative).toEqual(-15);
+            expect(newState.inputInitiative).toEqual(['5']);
 
             act(() => {
                 const [, dispatch] = result.current;
@@ -327,7 +316,7 @@ describe('State Manager', () => {
 
             const [ lastState ] = result.current;
 
-            expect(lastState.inputInitiative).toEqual(0);
+            expect(lastState.inputInitiative).toEqual([]);
         });
 
         test('should process correctly WRITE_INPUT_NAME and DELETE_INPUT_NAME', () => {
@@ -399,7 +388,7 @@ describe('State Manager', () => {
             const [ preState ] = result.current;
 
             expect(preState.selected).toEqual(null);
-            expect(preState.inputInitiative).toEqual(0);
+            expect(preState.inputInitiative).toEqual([]);
             expect(preState.inputName).toEqual('');
             expect(preState.inputHitpoints).toEqual(0);
             expect(preState.initiatives).toEqual(storeState.initiatives);
@@ -414,9 +403,6 @@ describe('State Manager', () => {
             const [ newState ] = result.current;
 
             expect(newState.selected).toEqual(storeState.initiatives[0].id);
-            expect(newState.inputInitiative).toEqual(storeState.initiatives[0].value);
-            expect(newState.inputName).toEqual(storeState.initiatives[0].name);
-            expect(newState.inputHitpoints).toEqual(storeState.initiatives[0].hitpoints);
 
             expect(newState.initiatives[0].hitpoints).toEqual(storeState.initiatives[0].hitpoints - 1);
             expect(newState.initiatives[0].conditions).toEqual([{color: "gold", condition: "Unconscious"}]);

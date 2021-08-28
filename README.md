@@ -9,7 +9,9 @@ The main goal on the design of this app was: I don't want to use the keyboard of
 * turn number
 * Characters' hit points
 * Characters' conditions
-* Save/Load generated combat scenes 
+* Save/Load generated combat scenes
+* Save/Load generated characters
+* Roll dice and for initiative
 
 
 # Dice assets from [Game Icons](https://game-icons.net/)
