@@ -75,5 +75,10 @@ describe('Rolling dices', () => {
             const result = rollIt(['4', '+','2','d20', '+', '5', '+', '2', 'd4']);
             expect(result).toBe(61);
         });
+
+        test('should roll a -1+d20 and return 20', () => {
+            const result = rollIt(['-', '1', '+','d20']);
+            expect(result).toBe(20);
+        });
     });
 });
