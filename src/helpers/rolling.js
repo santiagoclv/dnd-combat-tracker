@@ -3,17 +3,16 @@ export const magicDice = (max) => {
 };
 
 export const getDice = (string = '') => {
-    const match = string?.match(/^d\d*/g);
-    if (match) {
-        const [ dice ] = match;
+    const [ dice ] = string?.match(/^d\d*/g) ?? [ ];
+    if (dice) {
         const number = dice.slice(1);
         return () => magicDice(parseInt(number));
     }
     return () => 0
 };
 
-export const nDices = (amountStr, diceStr) => {
-    const amount = parseInt(amountStr);
+export const nDices = (amountStr , diceStr) => {
+    const amount = parseInt(!!amountStr ? amountStr : '1');
     const dice = getDice(diceStr);
     let total = 0;
     for(let i = 0; i < amount; i++){
@@ -24,9 +23,10 @@ export const nDices = (amountStr, diceStr) => {
 
 export const rollIt = (roll = []) => {
     const numbers = roll.reduce((acc, value, idx) => {
+
         const isNaNValue = isNaN(parseInt(value));
         const isValueSing = ["-", "+"].includes(value);
-        const isADice = value.search('d');
+        const [ isADice ] = value.match(/^d\d*/g) ?? [];
         const lastValue = acc.length > 0 ? acc[acc.length - 1] : null;
 
         if(isValueSing && value === '-'){

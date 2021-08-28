@@ -149,7 +149,7 @@ export default function Dices() {
                     />
                 </Col>
                 <Col>
-                    {rolled}
+                    <Title level={3}>Result: {rolled}</Title>
                 </Col>
                 <Col>
                     <Button
