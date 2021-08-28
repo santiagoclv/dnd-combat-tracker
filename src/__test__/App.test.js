@@ -10,8 +10,8 @@ describe('App', () => {
     test('should render with initial state on store', () => {
         render(<App />);
 
-        const noDataMessage = screen.getByText(/No Data/i);
-        expect(noDataMessage).toBeInTheDocument();
+        const noDataMessages = screen.getAllByText(/No Data/i);
+        expect(noDataMessages).toHaveLength(2);
 
         const nextChatacterBtn = screen.getByTitle('Next turn');
         expect(nextChatacterBtn).toBeDisabled();
@@ -23,8 +23,8 @@ describe('App', () => {
     test('should add new character to the list', async () => {
         render(<App />);
 
-        const noDataMessage = screen.getByText(/No Data/i);
-        expect(noDataMessage).toBeInTheDocument();
+        const noDataMessages = screen.getAllByText(/No Data/i);
+        expect(noDataMessages).toHaveLength(2);
 
         // character name
         fireEvent.click(screen.getByRole('button', { name: "a" }));

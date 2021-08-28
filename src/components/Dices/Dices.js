@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Button, Row, Col, Typography } from 'antd';
 import Icon, { RollbackOutlined } from '@ant-design/icons';
 
+import { rollIt } from '../../helpers/rolling';
+
 import { ReactComponent as D4 } from '../../assets/d4.svg';
 import { ReactComponent as D6 } from '../../assets/d6.svg';
 import { ReactComponent as D8 } from '../../assets/d8.svg';
@@ -88,25 +90,31 @@ function KeyboardDices({ handleKey }) {
 
 export default function Dices() {
     const [roll, setRoll] = useState([]);
+    const [rolled, setRolled] = useState(0);
 
     const handleKey = (value) => {
         const isNaNValue = isNaN(parseInt(value));
         const lastValue = roll.length > 0 ? roll[roll.length - 1] : null;
         const isLastNaN = isNaN(parseInt(lastValue));
 
-        if(isNaNValue || isLastNaN) {
-            return setRoll([...roll, value]);
+        if (isNaNValue || isLastNaN) {
+            let rollSplit = [...roll];
+            const isValueSing = ["-", "+"].includes(value);
+            const isLastValueSing = ["-", "+"].includes(lastValue);
+            if (!isValueSing && !isLastValueSing
+                && isLastNaN && !!lastValue)
+            {
+                rollSplit.push('+');
+            }
+            rollSplit.push(value);
+            return setRoll(rollSplit);
         }
 
         setRoll([...roll?.slice(0, -1), lastValue + value ]);
     };
 
-    const deleteLastKey = (value) => {
+    const deleteLastKey = () => {
         setRoll(roll?.slice(0, -1));
-    };
-
-    const rollIt = () => {
-        console.log(roll);
     };
 
     return (
@@ -141,12 +149,15 @@ export default function Dices() {
                     />
                 </Col>
                 <Col>
+                    {rolled}
+                </Col>
+                <Col>
                     <Button
                         size="large"
                         title={"Roll it"}
                         style={{ minWidth: '70px', height: '100%' }}
                         type="primary"
-                        onClick={() => rollIt()}
+                        onClick={() => setRolled(rollIt(roll))}
                     >
                         Roll it
                     </Button>

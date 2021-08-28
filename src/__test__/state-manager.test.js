@@ -21,22 +21,47 @@ import {
     REMOVE_CONDITION,
 } from '../state-manager/initiatives/actions';
 
-import { init, initialState, STORED_STATE } from '../state-manager/initiatives/reducer';
+import { initialState } from '../state-manager/initiatives/reducer';
+import { getInitialState as init, STORED_STATE } from '../state-manager/initiatives/storage-data';
 import { ContextWrapper, useStateValueInitiatives as useStateValue } from '../state-manager/context';
 
 const storeState = {
-    firstTurn: 1629556900206,
-    initiatives: [
-        { initiative: 66, name: "zz", hitpoints: 0, id: 1629556900206, monster: true, conditions: [] },
-        { initiative: 6, name: "ii", hitpoints: 0, id: 1629556872380, monster: false, conditions: [] },
-        { initiative: 6, name: "ii", hitpoints: 0, id: 1629556876214, monster: false, conditions: [] }
+    "initiatives": [
+        {
+            "initiative": 25,
+            "name": "goblin",
+            "hitpoints": 0,
+            "id": 1630109390887,
+            "monster": true,
+            "conditions": [],
+            "counter": 0
+        },
+        {
+            "initiative": 25,
+            "name": "goblin_1",
+            "hitpoints": 0,
+            "id": 1630109392958,
+            "monster": true,
+            "conditions": [],
+            "counter": 1
+        },
+        {
+            "initiative": 25,
+            "name": "goblin_2",
+            "hitpoints": 0,
+            "id": 1630109393938,
+            "monster": true,
+            "conditions": [],
+            "counter": 2
+        }
     ],
-    inputHitpoints: 0,
-    inputInitiative: 0,
-    inputName: "",
-    rounds: 22,
-    selected: null,
-    time: 132
+    "selected": null,
+    "inputInitiative": 0,
+    "inputName": "",
+    "inputHitpoints": 0,
+    "time": 0,
+    "rounds": 0,
+    "firstTurn": 1630109390887
 };
 
 describe('State Manager', () => {
@@ -86,7 +111,8 @@ describe('State Manager', () => {
             });
 
             const preStoredState = JSON.parse(localStorage.getItem(STORED_STATE));
-            expect(preStoredState).toBe(null);
+
+            expect(preStoredState).toEqual(initialState);
 
             act(() => {
                 const [, dispatch] = result.current;
@@ -118,7 +144,8 @@ describe('State Manager', () => {
                     id: 1234,
                     hitpoints: 0,
                     monster: true,
-                    conditions: []
+                    conditions: [],
+                    counter: 0
                 }
             ]);
             expect(firstTurn).toEqual(initiatives[0].id);
@@ -363,7 +390,7 @@ describe('State Manager', () => {
             expect(nextState.inputHitpoints).toEqual(0);
         });
 
-        test('should process correctly SELECT, EDIT_HP, EDIT_CONDITION AND REMOVE_CONDITION,', () => {
+        test('should process correctly SELECT, EDIT_HP, EDIT_CONDITION AND REMOVE_CONDITION', () => {
             localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
             const { result } = renderHook(() => useStateValue(), {
                 wrapper: ContextWrapper
@@ -375,7 +402,7 @@ describe('State Manager', () => {
             expect(preState.inputInitiative).toEqual(0);
             expect(preState.inputName).toEqual('');
             expect(preState.inputHitpoints).toEqual(0);
-            expect(preState.initiatives[0]).toEqual(storeState.initiatives[0]);
+            expect(preState.initiatives).toEqual(storeState.initiatives);
 
             act(() => {
                 const [, dispatch] = result.current;
