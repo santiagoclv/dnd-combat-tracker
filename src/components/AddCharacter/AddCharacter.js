@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { Button, Steps } from 'antd';
+import { Button, Steps, Typography, Row, Col } from 'antd';
 import { DeleteOutlined, RollbackOutlined } from '@ant-design/icons';
 
 import SuggestedCharacters from './components/SuggestedCharacters/SuggestedCharacters';
@@ -17,6 +17,7 @@ import {
 import { ADD_CHARACTER } from '../../state-manager/characters/actions';
 
 const { Step } = Steps;
+const { Title } = Typography;
 
 const steps = [
     {
@@ -131,6 +132,11 @@ export default function AddCharacter() {
                     </Button>
                 )}
             </div>
+            <Row justify="center">
+                <Col>
+                    <Title level={4}>Suggested Characters and Monsters</Title>
+                </Col>
+            </Row>
             <SuggestedCharacters />
         </>
     )
