@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dnd-combat-tracker/static/css/main.f50348b4.chunk.css",
-    "main.js": "/dnd-combat-tracker/static/js/main.290baa22.chunk.js",
-    "main.js.map": "/dnd-combat-tracker/static/js/main.290baa22.chunk.js.map",
+    "main.js": "/dnd-combat-tracker/static/js/main.45a37a7d.chunk.js",
+    "main.js.map": "/dnd-combat-tracker/static/js/main.45a37a7d.chunk.js.map",
     "runtime-main.js": "/dnd-combat-tracker/static/js/runtime-main.d1730490.js",
     "runtime-main.js.map": "/dnd-combat-tracker/static/js/runtime-main.d1730490.js.map",
     "static/css/2.97a13557.chunk.css": "/dnd-combat-tracker/static/css/2.97a13557.chunk.css",
@@ -26,6 +26,6 @@
     "static/css/2.97a13557.chunk.css",
     "static/js/2.d3b6b068.chunk.js",
     "static/css/main.f50348b4.chunk.css",
-    "static/js/main.290baa22.chunk.js"
+    "static/js/main.45a37a7d.chunk.js"
   ]
 }
