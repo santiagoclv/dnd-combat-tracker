@@ -6,6 +6,8 @@ import { DeleteOutlined, MenuOutlined } from '@ant-design/icons';
 import { useStateValueInitiatives as useStateValue } from '../../state-manager/context';
 import { BACK, NEXT, REMOVE_CHARACTER, SELECT, SET_INITIATIVES } from '../../state-manager/initiatives/actions';
 
+import classes from './ListCharacters.module.css';
+
 const { Text } = Typography;
 const { confirm } = Modal;
 
@@ -109,16 +111,9 @@ const ListCharacters = ({ wider }) => {
     );
 
     return (
-        <div style={{ 
-                height: '100vh',
-                overflowX: 'hidden',
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                borderRight: 'solid 2px lightgrey'
-            }} >
+        <div className={classes['list-characters-container']} >
             <Table
-                style={{ height: 'calc(100vh - 35px)', overflow: 'scroll', overflowX: 'hidden' }}
+                className={classes['list-characters-table']}
                 pagination={false}
                 dataSource={initiatives}
                 columns={columns}

@@ -16,6 +16,8 @@ import {
 } from '../../state-manager/initiatives/actions';
 import { ADD_CHARACTER } from '../../state-manager/characters/actions';
 
+import classes from './AddCharacter.module.css';
+
 const { Step } = Steps;
 const { Title } = Typography;
 
@@ -71,7 +73,7 @@ export default function AddCharacter() {
             {
                 current === 2 && <HitPoints />
             }
-            <div className="steps-action">
+            <div className={classes['steps-action']}>
                 {
                     current === 0 &&
                     <Button

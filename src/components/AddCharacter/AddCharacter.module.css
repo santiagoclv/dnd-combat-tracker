@@ -1,0 +1,11 @@
+.steps-action{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+.steps-action * {
+    margin: 0 8px;
+}
+.steps-action :first-child {
+    margin: 0 auto 0 0;
+}

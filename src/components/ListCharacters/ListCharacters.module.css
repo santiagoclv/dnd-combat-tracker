@@ -1,0 +1,32 @@
+.list-characters-container {
+    height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: solid 2px lightgrey;
+}
+
+.list-characters-table {
+    height: calc(100vh - 35px);
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+.row-dragging {
+    background: #fafafa;
+    border: 1px solid #ccc;
+}
+  
+.row-dragging td {
+    padding: 16px;
+    visibility: hidden;
+}
+
+.row-dragging .drag-visible {
+    visibility: visible;
+}
+
+tr:first-child {
+    background-color: #e6f7ff;
+}

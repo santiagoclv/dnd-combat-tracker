@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { Button, Row, Col, Checkbox, Tag } from 'antd';
+import { Button, Row, Col, Checkbox, Tag, Typography } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 
 import { useStateValueInitiatives as useStateValue } from '../../state-manager/context';
 import { EDIT_CONDITION, EDIT_HP, REMOVE_CONDITION } from '../../state-manager/initiatives/actions';
+
+import classes from './EditCharacter.module.css';
+
+const { Title, Text } = Typography;
 
 const buttonsHitpoints = [
     { value: 1, type: EDIT_HP },
@@ -84,8 +88,8 @@ export default function EditCharacter() {
 
     return (
         <>
-            <div className="LabelName"><span className="Name">{name}</span></div>
-            <div className="LabelName">Hit Points:</div>
+            <Title className={classes.labels}>{name}</Title>
+            <Row><Text className={classes.labels} >Hit Points:</Text></Row>
             <Row gutter={[16, 16]} justify="center">
                 <Col>
                     <Row gutter={[8, 8]}>
@@ -94,7 +98,7 @@ export default function EditCharacter() {
                     </Row>
                 </Col>
             </Row>
-            <div className="LabelName">Conditions:</div>
+            <Row><Text className={classes.labels} >Conditions:</Text></Row>
             <Row gutter={[16, 16]} justify="center">
                 <Col>
                     <Row gutter={[8, 8]}>

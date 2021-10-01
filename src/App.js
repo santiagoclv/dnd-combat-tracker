@@ -39,7 +39,7 @@ const App = () => {
                     overflowX: 'hidden',
                 }}
             >
-                <Tabs style={{padding: 8}}  onChange={setTab} activeKey={activeTab}>
+                <Tabs style={{ padding: 8 }}  onChange={setTab} activeKey={activeTab}>
                     <TabPane tab="Add Character" key="2">
                         <AddCharacter />
                     </TabPane>
