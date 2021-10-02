@@ -73,7 +73,7 @@ export default function AddCharacter() {
             {
                 current === 2 && <HitPoints />
             }
-            <div className={classes['steps-action']}>
+            <section className={classes['steps-action']}>
                 {
                     current === 0 &&
                     <Button
@@ -133,7 +133,7 @@ export default function AddCharacter() {
                         Add as a Player
                     </Button>
                 )}
-            </div>
+            </section>
             <Row justify="center">
                 <Col>
                     <Title level={4}>Suggested Characters and Monsters</Title>

@@ -111,7 +111,7 @@ const ListCharacters = ({ wider }) => {
     );
 
     return (
-        <div className={classes['list-characters-container']} >
+        <section className={classes['list-characters-container']} >
             <Table
                 className={classes['list-characters-table']}
                 pagination={false}
@@ -159,7 +159,7 @@ const ListCharacters = ({ wider }) => {
                     </Button>
                 </Col>
             </Row>
-        </div>
+        </section>
     );
 };
 
