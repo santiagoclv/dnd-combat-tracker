@@ -16,3 +16,4 @@ export const SELECT = "SELECT";
 export const EDIT_HP = "EDIT_HP";
 export const EDIT_CONDITION = "EDIT_CONDITION";
 export const REMOVE_CONDITION = "REMOVE_CONDITION";
+export const SET_INPUT_NAME = "SET_INPUT_NAME";

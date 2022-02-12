@@ -1,7 +1,10 @@
-import { Button, Row, Col, Typography } from 'antd';
+import { Button, Row, Col, Typography, Input } from 'antd';
 
-import { useStateValueInitiatives as useStateValue } from '../../../../state-manager/context';
-import { WRITE_INPUT_NAME } from '../../../../state-manager/initiatives/actions';
+import {
+    useStateValueInitiatives as useStateValue,
+    useStateValueKeyboard as useStateKBValue
+} from '../../../../state-manager/context';
+import { WRITE_INPUT_NAME, SET_INPUT_NAME } from '../../../../state-manager/initiatives/actions';
 
 const { Title } = Typography;
 
@@ -70,7 +73,8 @@ function Keyboard({ extraWords }) {
 }
 
 const Name = () => {
-    const [{ inputName }] = useStateValue();
+    const { isKeyboardMode } = useStateKBValue();
+    const [{ inputName }, dispatch] = useStateValue();
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const players_param = urlParams.get('players') ? urlParams.get('players') : null;
@@ -83,9 +87,20 @@ const Name = () => {
                     <Title style={{ margin: 10 }} level={3}>Name: {inputName}</Title>
                 </Col>
             </Row>
-            <Row gutter={[8, 8]}>
-                <Keyboard extraWords={players} />
-            </Row>
+            {
+                isKeyboardMode ?
+                    <Row gutter={[8, 8]}>
+                        <Keyboard extraWords={players} />
+                    </Row>
+                :
+                    <Row gutter={[8, 8]}>
+                        <Input
+                            onChange={({target: { value }}) => dispatch({ type: SET_INPUT_NAME, value })}
+                            value={inputName}
+                        />
+                    </Row>
+            }
+            
         </>
     );
 };
