@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Tabs } from 'antd';
-import { SettingOutlined, RadarChartOutlined } from '@ant-design/icons';
+import { Row, Col, Tabs, Switch, Typography } from 'antd';
+import { SettingOutlined, RadarChartOutlined, KeyOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
 
 import Dices from './components/Dices/Dices';
@@ -9,14 +9,20 @@ import AddCharacter from './components/AddCharacter/AddCharacter';
 import EditCharacter from './components/EditCharacter/EditCharacter';
 import ManageScenes from './components/ManageScenes/ManageScenes';
 import ManageCharacters from './components/ManageCharacters/ManageCharacters';
-import { useStateValueInitiatives as useStateValue, ContextWrapper } from './state-manager/context';
+import { 
+    useStateValueInitiatives as useStateInitValue,
+    useStateValueKeyboard as useStateKBValue,
+    ContextWrapper
+} from './state-manager/context';
 
 import './App.css';
 
+const { Text } = Typography;
 const { TabPane } = Tabs;
 
-const App = () => {
-    const [{ selected }] = useStateValue();
+const App = () => {    
+    const { isKeyboardMode, setKeyboardMode } = useStateKBValue();
+    const [{ selected }] = useStateInitValue();
     const [activeTab, setTab] = useState("2");
 
     useEffect(() => {
@@ -54,6 +60,15 @@ const App = () => {
                     </TabPane>
                     <TabPane tab={<><RadarChartOutlined /> Dices</>} key="5">
                         <Dices />
+                    </TabPane>
+                    <TabPane tab={<><KeyOutlined />Keyboard</>} key="6">
+                        <Text>Screen Keyboard:  </Text> 
+                        <Switch
+                            checkedChildren="ON"
+                            checked={isKeyboardMode}
+                            onChange={(checked) => setKeyboardMode(checked)}
+                            title="KB Mode"
+                        />
                     </TabPane>
                 </Tabs>
             </Col>

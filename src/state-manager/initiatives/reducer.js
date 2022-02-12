@@ -20,7 +20,8 @@ import {
     SELECT,
     EDIT_HP,
     EDIT_CONDITION,
-    REMOVE_CONDITION
+    REMOVE_CONDITION,
+    SET_INPUT_NAME,
 } from './actions';
 
 export const initialState = {
@@ -121,6 +122,9 @@ export const reducer = (state, action) => {
         case WRITE_INPUT_NAME: {
             const inputName = state.inputName + action.value;
             return { ...state, inputName };
+        }
+        case SET_INPUT_NAME: {
+            return { ...state, inputName: action.value };
         }
         case WRITE_INPUT_HP: {
             const inputHitpoints = parseInt(state.inputHitpoints + action.value);
