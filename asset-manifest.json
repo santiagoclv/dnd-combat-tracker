@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/dnd-combat-tracker/static/css/main.f50348b4.chunk.css",
-    "main.js": "/dnd-combat-tracker/static/js/main.45a37a7d.chunk.js",
-    "main.js.map": "/dnd-combat-tracker/static/js/main.45a37a7d.chunk.js.map",
+    "main.css": "/dnd-combat-tracker/static/css/main.33af2db4.chunk.css",
+    "main.js": "/dnd-combat-tracker/static/js/main.bbd200dd.chunk.js",
+    "main.js.map": "/dnd-combat-tracker/static/js/main.bbd200dd.chunk.js.map",
     "runtime-main.js": "/dnd-combat-tracker/static/js/runtime-main.d1730490.js",
     "runtime-main.js.map": "/dnd-combat-tracker/static/js/runtime-main.d1730490.js.map",
     "static/css/2.97a13557.chunk.css": "/dnd-combat-tracker/static/css/2.97a13557.chunk.css",
-    "static/js/2.d3b6b068.chunk.js": "/dnd-combat-tracker/static/js/2.d3b6b068.chunk.js",
-    "static/js/2.d3b6b068.chunk.js.map": "/dnd-combat-tracker/static/js/2.d3b6b068.chunk.js.map",
+    "static/js/2.0298c8ea.chunk.js": "/dnd-combat-tracker/static/js/2.0298c8ea.chunk.js",
+    "static/js/2.0298c8ea.chunk.js.map": "/dnd-combat-tracker/static/js/2.0298c8ea.chunk.js.map",
     "index.html": "/dnd-combat-tracker/index.html",
     "static/css/2.97a13557.chunk.css.map": "/dnd-combat-tracker/static/css/2.97a13557.chunk.css.map",
-    "static/css/main.f50348b4.chunk.css.map": "/dnd-combat-tracker/static/css/main.f50348b4.chunk.css.map",
-    "static/js/2.d3b6b068.chunk.js.LICENSE.txt": "/dnd-combat-tracker/static/js/2.d3b6b068.chunk.js.LICENSE.txt",
+    "static/css/main.33af2db4.chunk.css.map": "/dnd-combat-tracker/static/css/main.33af2db4.chunk.css.map",
+    "static/js/2.0298c8ea.chunk.js.LICENSE.txt": "/dnd-combat-tracker/static/js/2.0298c8ea.chunk.js.LICENSE.txt",
     "static/media/d10.db397369.svg": "/dnd-combat-tracker/static/media/d10.db397369.svg",
     "static/media/d12.2688cc5e.svg": "/dnd-combat-tracker/static/media/d12.2688cc5e.svg",
     "static/media/d20.9e452acb.svg": "/dnd-combat-tracker/static/media/d20.9e452acb.svg",
@@ -24,8 +24,8 @@
   "entrypoints": [
     "static/js/runtime-main.d1730490.js",
     "static/css/2.97a13557.chunk.css",
-    "static/js/2.d3b6b068.chunk.js",
-    "static/css/main.f50348b4.chunk.css",
-    "static/js/main.45a37a7d.chunk.js"
+    "static/js/2.0298c8ea.chunk.js",
+    "static/css/main.33af2db4.chunk.css",
+    "static/js/main.bbd200dd.chunk.js"
   ]
 }
