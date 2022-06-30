@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import 'antd/dist/antd.min.css';
 import { Row, Col, Tabs, Switch, Typography } from 'antd';
 import { SettingOutlined, RadarChartOutlined, KeyOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
 
 import Dices from './components/Dices/Dices';
 import ListCharacters from './components/ListCharacters/ListCharacters';

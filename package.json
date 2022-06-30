@@ -5,11 +5,11 @@
   "private": false,
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
-    "antd": "^4.19.3",
+    "antd": "^4.21.4",
     "lodash": "4.17.21",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-scripts": "5.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
     "react-sortable-hoc": "^2.0.0"
   },
   "scripts": {
