@@ -1,31 +1,21 @@
 {
   "files": {
-    "main.css": "/dnd-combat-tracker/static/css/main.33af2db4.chunk.css",
-    "main.js": "/dnd-combat-tracker/static/js/main.bbd200dd.chunk.js",
-    "main.js.map": "/dnd-combat-tracker/static/js/main.bbd200dd.chunk.js.map",
-    "runtime-main.js": "/dnd-combat-tracker/static/js/runtime-main.d1730490.js",
-    "runtime-main.js.map": "/dnd-combat-tracker/static/js/runtime-main.d1730490.js.map",
-    "static/css/2.97a13557.chunk.css": "/dnd-combat-tracker/static/css/2.97a13557.chunk.css",
-    "static/js/2.0298c8ea.chunk.js": "/dnd-combat-tracker/static/js/2.0298c8ea.chunk.js",
-    "static/js/2.0298c8ea.chunk.js.map": "/dnd-combat-tracker/static/js/2.0298c8ea.chunk.js.map",
+    "main.css": "/dnd-combat-tracker/static/css/main.ccf2e561.css",
+    "main.js": "/dnd-combat-tracker/static/js/main.13b92529.js",
+    "static/media/d20.svg": "/dnd-combat-tracker/static/media/d20.9e452acbc3953b44782309e75591f8da.svg",
+    "static/media/d12.svg": "/dnd-combat-tracker/static/media/d12.2688cc5efa441a0c27314b19733e4610.svg",
+    "static/media/d10.svg": "/dnd-combat-tracker/static/media/d10.db397369a55b5cec8abc6c315864031f.svg",
+    "static/media/dragon-head.svg": "/dnd-combat-tracker/static/media/dragon-head.8d48808f813769dedf8b08b6d7e38ba8.svg",
+    "static/media/d6.svg": "/dnd-combat-tracker/static/media/d6.b838cbcd94796b2130d5ad58c70af702.svg",
+    "static/media/d8.svg": "/dnd-combat-tracker/static/media/d8.670c0d34f29e3e3b794be8e668b30ee6.svg",
+    "static/media/visored-helm.svg": "/dnd-combat-tracker/static/media/visored-helm.aeff17207f0780117bb0125bb10baaac.svg",
+    "static/media/d4.svg": "/dnd-combat-tracker/static/media/d4.bbaefe6065c9e355b1ac245686245d33.svg",
     "index.html": "/dnd-combat-tracker/index.html",
-    "static/css/2.97a13557.chunk.css.map": "/dnd-combat-tracker/static/css/2.97a13557.chunk.css.map",
-    "static/css/main.33af2db4.chunk.css.map": "/dnd-combat-tracker/static/css/main.33af2db4.chunk.css.map",
-    "static/js/2.0298c8ea.chunk.js.LICENSE.txt": "/dnd-combat-tracker/static/js/2.0298c8ea.chunk.js.LICENSE.txt",
-    "static/media/d10.db397369.svg": "/dnd-combat-tracker/static/media/d10.db397369.svg",
-    "static/media/d12.2688cc5e.svg": "/dnd-combat-tracker/static/media/d12.2688cc5e.svg",
-    "static/media/d20.9e452acb.svg": "/dnd-combat-tracker/static/media/d20.9e452acb.svg",
-    "static/media/d4.bbaefe60.svg": "/dnd-combat-tracker/static/media/d4.bbaefe60.svg",
-    "static/media/d6.b838cbcd.svg": "/dnd-combat-tracker/static/media/d6.b838cbcd.svg",
-    "static/media/d8.670c0d34.svg": "/dnd-combat-tracker/static/media/d8.670c0d34.svg",
-    "static/media/dragon-head.8d48808f.svg": "/dnd-combat-tracker/static/media/dragon-head.8d48808f.svg",
-    "static/media/visored-helm.aeff1720.svg": "/dnd-combat-tracker/static/media/visored-helm.aeff1720.svg"
+    "main.ccf2e561.css.map": "/dnd-combat-tracker/static/css/main.ccf2e561.css.map",
+    "main.13b92529.js.map": "/dnd-combat-tracker/static/js/main.13b92529.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.d1730490.js",
-    "static/css/2.97a13557.chunk.css",
-    "static/js/2.0298c8ea.chunk.js",
-    "static/css/main.33af2db4.chunk.css",
-    "static/js/main.bbd200dd.chunk.js"
+    "static/css/main.ccf2e561.css",
+    "static/js/main.13b92529.js"
   ]
 }
