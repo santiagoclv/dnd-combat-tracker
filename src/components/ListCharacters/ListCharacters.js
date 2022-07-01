@@ -21,7 +21,7 @@ const SortableContainer = sortableContainer(props => <tbody {...props} />);
 const getTime = (count = 0) => {
     var date = new Date(null);
     date.setSeconds(count);
-    return date.toISOString().substring(11, 8);
+    return date.toISOString().substring(11, 19);
 };
 
 const ListCharacters = () => {

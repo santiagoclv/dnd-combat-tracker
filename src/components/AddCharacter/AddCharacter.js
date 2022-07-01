@@ -57,7 +57,7 @@ export default function AddCharacter() {
 
     return (
         <>
-            <Steps current={current} style={{
+            <Steps current={current} size="small" style={{
                 marginBottom: '5px'
             }}>
                 {steps.map(item => (
