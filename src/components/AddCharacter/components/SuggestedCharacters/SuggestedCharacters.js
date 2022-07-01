@@ -73,7 +73,7 @@ const CreatureList = ({ dataSource, handleInputAction, handleAdd }) => {
                 border: 'solid 1px lightgrey',
                 borderTop: 'solid 2px lightgrey',
             }}
-            grid={{ gutter: 16, column: 5 }}
+            grid={{ gutter: 16, column: 3 }}
             dataSource={dataSource}
             renderItem={({ name, initiative, hitpoints, monster }) => (
                 <Card
