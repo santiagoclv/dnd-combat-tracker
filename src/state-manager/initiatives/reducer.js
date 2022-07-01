@@ -11,6 +11,7 @@ import {
     WRITE_INPUT_ALL,
     WRITE_INPUT_INITIATIVE,
     WRITE_INPUT_HP,
+    SET_CREATURE_TYPE,
     DELETE_INPUT_INITIATIVE,
     NEXT,
     BACK,
@@ -27,6 +28,7 @@ export const initialState = {
     inputInitiative: [],
     inputName: '',
     inputHitpoints: 0,
+    inputCreatureType: true, // true === 'is a monster'
     time: 0,
     rounds: 0,
     firstTurn: null,
@@ -62,7 +64,8 @@ export const reducer = (state, action) => {
                 initiatives,
                 inputInitiative: [],
                 inputName: '',
-                inputHitpoints: 0
+                inputHitpoints: 0,
+                inputCreatureType: true
             };
         }
         case DELETE_ALL: {
@@ -87,12 +90,13 @@ export const reducer = (state, action) => {
             };
         }
         case WRITE_INPUT_ALL: {
-            const { name, initiative, hitpoints } = action.value;
+            const { monster, name, initiative, hitpoints } = action.value;
             return {
                 ...state,
                 inputName: name,
                 inputHitpoints: hitpoints,
-                inputInitiative: initiative
+                inputInitiative: initiative,
+                inputCreatureType: monster
             };
         }
         case WRITE_INPUT_INITIATIVE: {
@@ -118,6 +122,9 @@ export const reducer = (state, action) => {
         }
         case SET_INPUT_NAME: {
             return { ...state, inputName: action.value };
+        }
+        case SET_CREATURE_TYPE: {
+            return { ...state, inputCreatureType: !!action.value };
         }
         case WRITE_INPUT_HP: {
             const inputHitpoints = parseInt(action.value);

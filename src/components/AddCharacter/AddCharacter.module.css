@@ -1,7 +1,7 @@
 .steps-action{
     display: flex;
     justify-content: flex-end;
-    margin-top: 30px;
+    margin-top: 5px;
 }
 .steps-action * {
     margin: 0 8px;

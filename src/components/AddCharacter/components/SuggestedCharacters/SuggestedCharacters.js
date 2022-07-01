@@ -15,15 +15,12 @@ const matchName = (inputName, name) => name.toLowerCase().search(inputName.toLow
 const { Title } = Typography;
 
 export default function SuggestedCharacters() {
-    const [{ inputName }, dispatch] = useStateValueInitiatives();
+    const [{ inputName, inputCreatureType }, dispatch] = useStateValueInitiatives();
     const [allCharacters] = useStateValueCharacters();
 
-    const [monsters, characters] = useMemo(() => (
-        [
-            allCharacters.filter(chr => matchName(inputName, chr.name) && chr.monster),
-            allCharacters.filter(chr => matchName(inputName, chr.name) && !chr.monster)
-        ]
-    ), [inputName, allCharacters]);
+    const creatures = useMemo(() => (
+        allCharacters.filter(chr => matchName(inputName, chr.name) && chr.monster === inputCreatureType)
+    ), [inputName, inputCreatureType, allCharacters]);
 
     const handleInputAction = (value) => {
         dispatch({
@@ -41,18 +38,10 @@ export default function SuggestedCharacters() {
 
     return (
         <Row>
-            <Col span={12}>
-                <Title level={4}>Monsters</Title>
+            <Col span={24}>
+                <Title level={5}>{ inputCreatureType ? 'Monsters': 'Characters'}</Title>
                 <CreatureList
-                    dataSource={monsters}
-                    handleInputAction={handleInputAction}
-                    handleAdd={handleAdd}
-                />
-            </ Col>
-            <Col span={12}>
-                <Title level={4}>Characters</Title>
-                <CreatureList
-                    dataSource={characters}
+                    dataSource={creatures}
                     handleInputAction={handleInputAction}
                     handleAdd={handleAdd}
                 />
@@ -82,7 +71,7 @@ const CreatureList = ({ dataSource, handleInputAction, handleAdd }) => {
                         <EditOutlined
                             key="load"
                             title="Load and edit"
-                            onClick={() => handleInputAction({ name, initiative, hitpoints })}
+                            onClick={() => handleInputAction({ name, initiative, hitpoints, monster })}
                         />,
                         monster ?
                             <DragonHeadIcon

@@ -5,7 +5,7 @@ import { RollbackOutlined } from '@ant-design/icons';
 import SuggestedCharacters from './components/SuggestedCharacters/SuggestedCharacters';
 import Initiative from './components/Initiative/Initiative';
 import HitPoints from './components/HitPoints/HitPoints';
-import Name from './components/Name/Name';
+import NameaAndKind from './components/NameaAndKind/NameaAndKind';
 
 import { useStateValueCharacters, useStateValueInitiatives as useStateValue } from '../../state-manager/context';
 import {
@@ -20,7 +20,7 @@ const { Step } = Steps;
 
 const steps = [
     {
-        title: 'Name',
+        title: 'Name And Kind',
     },
     {
         title: 'Initiative',
@@ -34,13 +34,14 @@ export default function AddCharacter() {
     const [{
         inputHitpoints: hitpoints,
         inputName: name,
-        inputInitiative: initiative
+        inputInitiative: initiative,
+        inputCreatureType: monster
     }, dispatch] = useStateValue();
     const [, dispatchCharacters ] = useStateValueCharacters();
     const [current, setCurrent] = useState(0);
 
     const handleClickAdd = useCallback(
-        (monster) => {
+        () => {
             setCurrent(0);
             dispatch({
                 type: ADD_INITIATIVE,
@@ -51,13 +52,13 @@ export default function AddCharacter() {
                 value: { monster, hitpoints, name, initiative }
             });
         },
-        [hitpoints, name, initiative, dispatch, setCurrent, dispatchCharacters],
+        [monster, hitpoints, name, initiative, dispatch, setCurrent, dispatchCharacters],
     );
 
     return (
         <>
             <Steps current={current} style={{
-                marginBottom: '15px'
+                marginBottom: '5px'
             }}>
                 {steps.map(item => (
                     <Step key={item.title} title={item.title} />
@@ -67,7 +68,7 @@ export default function AddCharacter() {
                 current === 1 && <Initiative />
             }
             {
-                current === 0 && <Name />
+                current === 0 && <NameaAndKind />
             }
             {
                 current === 2 && <HitPoints />
@@ -98,18 +99,10 @@ export default function AddCharacter() {
                 {current === steps.length - 1 && (
                     <Button
                         type="primary"
-                        title="Add character as a Monster/NPC"
-                        danger
-                        onClick={() => handleClickAdd(true)}>
-                        Add as a Monster
-                    </Button>
-                )}
-                {current === steps.length - 1 && (
-                    <Button
-                        type="primary"
-                        title="Add character as a Player"
-                        onClick={() => handleClickAdd(false)}>
-                        Add as a Player
+                        title="Add creature"
+                        danger={monster}
+                        onClick={() => handleClickAdd()}>
+                        Add Creature
                     </Button>
                 )}
             </section>
