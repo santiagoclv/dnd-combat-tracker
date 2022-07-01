@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { Button, Steps, Typography, Row, Col } from 'antd';
-import { DeleteOutlined, RollbackOutlined } from '@ant-design/icons';
+import { Button, Steps } from 'antd';
+import { RollbackOutlined } from '@ant-design/icons';
 
 import SuggestedCharacters from './components/SuggestedCharacters/SuggestedCharacters';
 import Initiative from './components/Initiative/Initiative';
@@ -10,16 +10,13 @@ import Name from './components/Name/Name';
 import { useStateValueCharacters, useStateValueInitiatives as useStateValue } from '../../state-manager/context';
 import {
     ADD_INITIATIVE,
-    DELETE_INPUT_HP,
-    DELETE_INPUT_INITIATIVE,
-    DELETE_INPUT_NAME
+    DELETE_INPUT_INITIATIVE
 } from '../../state-manager/initiatives/actions';
 import { ADD_CHARACTER } from '../../state-manager/characters/actions';
 
 import classes from './AddCharacter.module.css';
 
 const { Step } = Steps;
-const { Title } = Typography;
 
 const steps = [
     {
@@ -59,7 +56,9 @@ export default function AddCharacter() {
 
     return (
         <>
-            <Steps current={current}>
+            <Steps current={current} style={{
+                marginBottom: '15px'
+            }}>
                 {steps.map(item => (
                     <Step key={item.title} title={item.title} />
                 ))}
@@ -75,16 +74,6 @@ export default function AddCharacter() {
             }
             <section className={classes['steps-action']}>
                 {
-                    current === 0 &&
-                    <Button
-                        danger
-                        title="Delete last letter"
-                        style={{ width: '100px' }}
-                        type="primary" onClick={() => dispatch({ type: DELETE_INPUT_NAME })} >
-                        <RollbackOutlined />
-                    </Button>
-                }
-                {
                     current === 1 &&
                     <Button
                         danger
@@ -92,16 +81,6 @@ export default function AddCharacter() {
                         style={{ width: '100px' }}
                         type="primary" onClick={() => dispatch({ type: DELETE_INPUT_INITIATIVE })} >
                         <RollbackOutlined />
-                    </Button>
-                }
-                {
-                    current === 2 &&
-                    <Button
-                        danger
-                        title="Delete HP"
-                        style={{ width: '100px' }}
-                        type="primary" onClick={() => dispatch({ type: DELETE_INPUT_HP })} >
-                        <DeleteOutlined />
                     </Button>
                 }
 
@@ -134,11 +113,6 @@ export default function AddCharacter() {
                     </Button>
                 )}
             </section>
-            <Row justify="center">
-                <Col>
-                    <Title level={4}>Suggested Characters and Monsters</Title>
-                </Col>
-            </Row>
             <SuggestedCharacters />
         </>
     )

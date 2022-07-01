@@ -9,11 +9,8 @@ import {
     LOAD_STATE,
     SET_INITIATIVES,
     WRITE_INPUT_INITIATIVE,
-    WRITE_INPUT_NAME,
     WRITE_INPUT_HP,
     DELETE_INPUT_INITIATIVE,
-    DELETE_INPUT_NAME,
-    DELETE_INPUT_HP,
     SELECT,
     EDIT_HP,
     EDIT_CONDITION,
@@ -319,37 +316,7 @@ describe('State Manager', () => {
             expect(lastState.inputInitiative).toEqual([]);
         });
 
-        test('should process correctly WRITE_INPUT_NAME and DELETE_INPUT_NAME', () => {
-            localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
-            const { result } = renderHook(() => useStateValue(), {
-                wrapper: ContextWrapper
-            });
-
-            const [ preState ] = result.current;
-
-            expect(preState.inputName).toEqual('');
-
-            act(() => {
-                const [, dispatch] = result.current;
-                dispatch({ type: WRITE_INPUT_NAME, value: "a" });
-                dispatch({ type: WRITE_INPUT_NAME, value: "b" });
-            });
-
-            const [ newState ] = result.current;
-
-            expect(newState.inputName).toEqual("ab");
-
-            act(() => {
-                const [, dispatch] = result.current;
-                dispatch({ type: DELETE_INPUT_NAME });
-            });
-
-            const [ nextState ] = result.current;
-
-            expect(nextState.inputName).toEqual("a");
-        });
-
-        test('should process correctly WRITE_INPUT_HP and DELETE_INPUT_HP', () => {
+        test('should process correctly WRITE_INPUT_HP', () => {
             localStorage.setItem(STORED_STATE, JSON.stringify(storeState));
             const { result } = renderHook(() => useStateValue(), {
                 wrapper: ContextWrapper
@@ -367,16 +334,7 @@ describe('State Manager', () => {
 
             const [ newState ] = result.current;
 
-            expect(newState.inputHitpoints).toEqual(14);
-
-            act(() => {
-                const [, dispatch] = result.current;
-                dispatch({ type: DELETE_INPUT_HP });
-            });
-
-            const [ nextState ] = result.current;
-
-            expect(nextState.inputHitpoints).toEqual(0);
+            expect(newState.inputHitpoints).toEqual(4);
         });
 
         test('should process correctly SELECT, EDIT_HP, EDIT_CONDITION AND REMOVE_CONDITION', () => {

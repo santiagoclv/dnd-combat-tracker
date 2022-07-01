@@ -9,3 +9,6 @@
 .steps-action :first-child {
     margin: 0 auto 0 0;
 }
+.steps-action :only-child {
+    margin: 0 8px 0 auto;
+}

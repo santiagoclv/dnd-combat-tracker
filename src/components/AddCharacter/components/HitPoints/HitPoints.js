@@ -1,60 +1,25 @@
-import { Button, Row, Col, Typography } from 'antd';
-
-import { useStateValueInitiatives as useStateValue } from '../../../../state-manager/context';
+import { Row, Col, Form, InputNumber } from 'antd';
 import { WRITE_INPUT_HP } from '../../../../state-manager/initiatives/actions';
 
-const { Title } = Typography;
+import {
+    useStateValueInitiatives as useStateValue
+} from '../../../../state-manager/context';
 
-const buttons = [
-    { value: "1", type: WRITE_INPUT_HP },
-    { value: "2", type: WRITE_INPUT_HP },
-    { value: "3", type: WRITE_INPUT_HP },
-    { value: "4", type: WRITE_INPUT_HP },
-    { value: "5", type: WRITE_INPUT_HP },
-    { value: "6", type: WRITE_INPUT_HP },
-    { value: "7", type: WRITE_INPUT_HP },
-    { value: "8", type: WRITE_INPUT_HP },
-    { value: "9", type: WRITE_INPUT_HP },
-    {},
-    { value: "0", type: WRITE_INPUT_HP },
-];
+const Name = () => {
+    const [{ inputHitpoints }, dispatch] = useStateValue();
 
-
-function Keyboard() {
-    const [, dispatch] = useStateValue();
     return (
-        <>
-            {buttons.map(({ type, value, Icon, danger }) => {
-                if (!type) return <Col span={8} key={"vacio"} />;
-                return (
-                    <Col span={8} key={value ?? type}>
-                        <Button
-                            danger={danger}
-                            size="large"
-                            title={value ?? undefined}
-                            style={{ minWidth: '70px', height: '100%' }}
-                            type="primary" onClick={() => dispatch({ type, value })} >
-                            {!!value ? value : <Icon />}
-                        </Button>
-                    </Col>
-                );
-            })}
-        </>
+        <Row gutter={[16, 16]} justify="center">
+            <Col>
+                <Form.Item label="HP" name="hp" >
+                    <InputNumber
+                        onChange={(value) => dispatch({ type: WRITE_INPUT_HP, value })}
+                        value={inputHitpoints}
+                    />
+                </Form.Item>
+            </Col>
+        </Row>
     );
-}
+};
 
-export default function HitPoints() {
-    const [{ inputHitpoints }] = useStateValue();
-    return (
-        <>
-            <Row gutter={[16, 16]} justify="center">
-                <Col span={8} >
-                    <Title style={{ margin: 10 }} level={3}>HP: {inputHitpoints}</Title>
-                </Col>
-            </Row>
-            <Row gutter={[8, 8]}>
-                <Keyboard />
-            </Row>
-        </>
-    );
-}
+export default Name;

@@ -22,9 +22,9 @@ const buttons = [
     { value: "6" },
     { value: "7" },
     { value: "8" },
-    { value: "9" },
-    { value: "-" },
+    { value: "9" },    
     { value: "0" },
+    { value: "-" },
     { value: "+" },
 ];
 
@@ -49,10 +49,11 @@ function KeyboardNumbers({ handleKey }) {
         <>
             {buttons.map(({ value }) => {
                 return (
-                    <Col span={8} key={value}>
+                    <Col key={value}>
                         <Button
                             size="large"
                             title={value}
+                            name={value}
                             style={{ minWidth: '70px', height: '100%' }}
                             type="primary"
                             onClick={() => handleKey(value)}
@@ -71,10 +72,11 @@ function KeyboardDices({ handleKey }) {
         <>
             {dices.map(({ value, DiceIcon }) => {
                 return (
-                    <Col span={8} key={value}>
+                    <Col key={value}>
                         <Button
                             size="large"
                             title={value}
+                            name={value}
                             icon={DiceIcon}
                             style={{ minWidth: '70px', height: '100%' }}
                             type="primary"

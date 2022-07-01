@@ -10,11 +10,8 @@ import {
     REMOVE_CHARACTER,
     WRITE_INPUT_ALL,
     WRITE_INPUT_INITIATIVE,
-    WRITE_INPUT_NAME,
     WRITE_INPUT_HP,
     DELETE_INPUT_INITIATIVE,
-    DELETE_INPUT_NAME,
-    DELETE_INPUT_HP,
     NEXT,
     BACK,
     SELECT,
@@ -119,25 +116,15 @@ export const reducer = (state, action) => {
 
             return { ...state, inputInitiative: [...roll?.slice(0, -1), lastValue + value] };
         }
-        case WRITE_INPUT_NAME: {
-            const inputName = state.inputName + action.value;
-            return { ...state, inputName };
-        }
         case SET_INPUT_NAME: {
             return { ...state, inputName: action.value };
         }
         case WRITE_INPUT_HP: {
-            const inputHitpoints = parseInt(state.inputHitpoints + action.value);
+            const inputHitpoints = parseInt(action.value);
             return { ...state, inputHitpoints };
         }
         case DELETE_INPUT_INITIATIVE: {
             return { ...state, inputInitiative: (state.inputInitiative ?? [])?.slice(0, -1) };
-        }
-        case DELETE_INPUT_HP: {
-            return { ...state, inputHitpoints: 0 };
-        }
-        case DELETE_INPUT_NAME: {
-            return { ...state, inputName: state?.inputName?.slice(0, -1) ?? '' };
         }
         case NEXT: {
             const { firstTurn } = state;

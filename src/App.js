@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import 'antd/dist/antd.min.css';
-import { Row, Col, Tabs, Switch, Typography } from 'antd';
-import { SettingOutlined, RadarChartOutlined, KeyOutlined } from '@ant-design/icons';
+import { Row, Col, Tabs } from 'antd';
+import { SettingOutlined, RadarChartOutlined } from '@ant-design/icons';
 
 import Dices from './components/Dices/Dices';
 import ListCharacters from './components/ListCharacters/ListCharacters';
@@ -11,17 +11,14 @@ import ManageScenes from './components/ManageScenes/ManageScenes';
 import ManageCharacters from './components/ManageCharacters/ManageCharacters';
 import { 
     useStateValueInitiatives as useStateInitValue,
-    useStateValueKeyboard as useStateKBValue,
     ContextWrapper
 } from './state-manager/context';
 
 import './App.css';
 
-const { Text } = Typography;
 const { TabPane } = Tabs;
 
-const App = () => {    
-    const { isKeyboardMode, setKeyboardMode } = useStateKBValue();
+const App = () => {
     const [{ selected }] = useStateInitValue();
     const [activeTab, setTab] = useState("2");
 
@@ -46,29 +43,20 @@ const App = () => {
                 }}
             >
                 <Tabs style={{ padding: 8 }}  onChange={setTab} activeKey={activeTab}>
-                    <TabPane tab="Add Character" key="2">
+                    <TabPane tab="Add Creature" key="2">
                         <AddCharacter />
                     </TabPane>
-                    <TabPane disabled={!selected} tab="Edit Character" key="1">
+                    <TabPane disabled={!selected} tab="Edit Creature" key="1">
                         <EditCharacter />
                     </TabPane>
                     <TabPane tab={<><SettingOutlined /> Scenes</>} key="3">
                         <ManageScenes />
                     </TabPane>
-                    <TabPane tab={<><SettingOutlined /> Characters</>} key="4">
+                    <TabPane tab={<><SettingOutlined /> Creatures</>} key="4">
                         <ManageCharacters />
                     </TabPane>
                     <TabPane tab={<><RadarChartOutlined /> Dices</>} key="5">
                         <Dices />
-                    </TabPane>
-                    <TabPane tab={<><KeyOutlined />Keyboard</>} key="6">
-                        <Text>Screen Keyboard:  </Text> 
-                        <Switch
-                            checkedChildren="ON"
-                            checked={isKeyboardMode}
-                            onChange={(checked) => setKeyboardMode(checked)}
-                            title="KB Mode"
-                        />
                     </TabPane>
                 </Tabs>
             </Col>
