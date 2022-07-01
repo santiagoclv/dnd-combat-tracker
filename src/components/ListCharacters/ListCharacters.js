@@ -21,14 +21,14 @@ const SortableContainer = sortableContainer(props => <tbody {...props} />);
 const getTime = (count = 0) => {
     var date = new Date(null);
     date.setSeconds(count);
-    return date.toISOString().substr(11, 8);
+    return date.toISOString().substring(11, 8);
 };
 
-const ListCharacters = ({ wider }) => {
+const ListCharacters = () => {
     const [{ initiatives, rounds, time }, dispatch] = useStateValue();
 
     const columns = useMemo(() => {
-        const fields = [
+        return [
             {
                 dataIndex: 'sort',
                 width: 15,
@@ -53,11 +53,8 @@ const ListCharacters = ({ wider }) => {
                 render: ({hitpoints, monster}) => (
                     <span style={{ fontWeight: 500 , color: hitpoints > 0 || !monster ? 'green' : 'red'}}>{hitpoints}</span>
                 )
-            }
-        ];
-
-        if(wider){
-            fields.push({
+            },
+            {
                 title: 'Conditions',
                 dataIndex: 'conditions',
                 key: 'conditions',
@@ -70,8 +67,8 @@ const ListCharacters = ({ wider }) => {
                         ))}
                     </div>
                   ),
-            });
-            fields.push({
+            },
+            {
                 key: 'id',
                 render: ({id, name}) => (
                   <DeleteOutlined onClick={() => {
@@ -84,10 +81,9 @@ const ListCharacters = ({ wider }) => {
                       });
                     }} />
                 ),
-              });
-        }
-        return fields;
-    }, [wider, dispatch]);
+            }
+        ];
+    }, [dispatch]);
 
     const onSortEnd = ({ oldIndex, newIndex }) => {
         if (oldIndex !== newIndex) {

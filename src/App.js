@@ -28,15 +28,13 @@ const App = () => {
         }
     }, [selected]);
 
-    const shrinkList = activeTab !== "1";
-
     return (
         <Row style={{ width: "100%", height: "100%" }}>
-            <Col span={shrinkList ? 8 : 14} >
-                <ListCharacters wider={!shrinkList} />
+            <Col span={14} >
+                <ListCharacters />
             </Col>
             <Col
-                span={shrinkList ? 16 : 10} 
+                span={10} 
                 style={{ 
                     height: '100vh',
                     overflowX: 'hidden',
