@@ -56,7 +56,7 @@ const CreatureList = ({ dataSource, handleInputAction, handleAdd }) => {
         <List
             style={{
                 margin: '0.5rem',
-                height: '60vh',
+                height: '53vh',
                 overflowY: 'scroll',
                 overflowX: 'hidden',
                 border: 'solid 1px lightgrey',
