@@ -99,10 +99,10 @@ export default function AddCharacter() {
                 {current === steps.length - 1 && (
                     <Button
                         type="primary"
-                        title="Add creature"
+                        title={ monster ? 'Add Monster': 'Add Character' }
                         danger={monster}
                         onClick={() => handleClickAdd()}>
-                        Add Creature
+                        Add { monster ? 'Monster': 'Character' }
                     </Button>
                 )}
             </section>
