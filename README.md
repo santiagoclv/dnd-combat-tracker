@@ -1,6 +1,6 @@
 # [Combat Tracker](https://santiagoclv.github.io/dnd-combat-tracker) for TTRPG
 
-The main goal on the design of this app was: I don't want to use the keyboard of my tablet and that is why there is not almost any input field to get user's input and buttons to simulate the keyboards.
+Tracking combat initiative and HP from NPC could be cumbersome.
 
 ## Fetures
 
